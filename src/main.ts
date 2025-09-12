@@ -9,7 +9,7 @@ import { PLACES } from "./shared/positions";
 import axesHelper from "./helpers/axesHelper";
 
 import { BENCH_POSITION, BENCH_ROTATION, VIOLIN_POSITION, VIOLIN_ROTATION } from "./shared/positions";
-import { travelTo } from "./meshes/traveling";
+import travelling from "./shared/travelling";
 
 async function main() {
     // Meshe
@@ -31,13 +31,15 @@ async function main() {
         console.log(event.key);
         switch (event.key) {
             case 'a':
-                updateLoop.push(travelTo(PLACES.BENCH));
+                updateLoop.push(travelling.travelTo(PLACES.BENCH));
                 break;
             case 'z':
-                updateLoop.push(travelTo(PLACES.PATH));
+                updateLoop.push(travelling.travelTo(PLACES.PATH));
                 break;
         }
     });
+
+    scene.add(travelling.getCurves());
 
     // Lights
     scene.add(ambientLight);
