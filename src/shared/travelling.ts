@@ -1,12 +1,14 @@
-import { PLACES, TRAVELING } from "../shared/positions";
+import { PLACES, TRAVELLING } from "../shared/positions";
 import * as THREE from "three";
 import timer from "../timer";
 import camera from "../camera";
 import { CurrentUpdate } from "../helpers/updateLoop";
+import BezierCurve from "./BezierCurve";
+import { CAMERA_BENCH_POSITION, CAMERA_START_POSITION, CONTROL_POINTS } from "../shared/positions";
 
 type Curves = {
     [start: number]: {
-        [end: number]: THREE.CatmullRomCurve3
+        [end: number]: BezierCurve
     }
 };
 
@@ -16,19 +18,19 @@ class Travelling {
     isTravelling: boolean;
     constructor(currentPlace: number) {
         this.currentPlace = currentPlace;
-        this.curves = this.convertToTravelingCurves(TRAVELING);
+        this.curves = this.convertToTravelingCurves(TRAVELLING);
         this.isTravelling = false;
     }
 
-    travelTo(place: number) {
+    travelTo(place: number, duration: number = 7.5) {
         const curve = this.curves[this.currentPlace][place];
         this.isTravelling = true;
-        const travelFunction = this.travelAlongCurve(curve, timer.getElapsed(), 5);
+        const travelFunction = this.travelAlongCurve(curve, timer.getElapsed(), duration);
         this.currentPlace = place;
         return travelFunction;
     }
 
-    travelAlongCurve = (curve: THREE.CatmullRomCurve3, startTime: number, duration: number) => (elapsedTime: number, update: CurrentUpdate) => {
+    travelAlongCurve = (curve: BezierCurve, startTime: number, duration: number) => (elapsedTime: number, update: CurrentUpdate) => {
         const time = elapsedTime - startTime;
         if (time > duration) {
             this.isTravelling = false;
@@ -43,12 +45,12 @@ class Travelling {
         camera.lookAt(look);
     }
 
-    convertToTravelingCurves = (positions: typeof TRAVELING) => {
+    convertToTravelingCurves = (positions: typeof TRAVELLING) => {
         const curves = {} as Curves;
         for (const place in positions) {
             curves[place] = {};
             for (const place2 in positions[place]) {
-                curves[place][place2] = new THREE.CatmullRomCurve3(positions[place][place2], false, "catmullrom", 0.5);
+                curves[place][place2] = new BezierCurve(TRAVELLING[place][place2], CONTROL_POINTS[place][place2]);
             }
         }
         return curves;
@@ -59,9 +61,7 @@ class Travelling {
         for (const place in this.curves) {
             for (const place2 in this.curves[place]) {
                 const curve = this.curves[place][place2];
-                const geometry = new THREE.BufferGeometry().setFromPoints( curve.getSpacedPoints(100) );
-                const line = new THREE.Line(geometry, new THREE.LineBasicMaterial({ color: 0x00ff00 }));
-                group.add(line);
+                group.add(curve.curve);
             }
         }
         return group;

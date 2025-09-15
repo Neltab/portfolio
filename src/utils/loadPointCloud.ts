@@ -62,6 +62,7 @@ function generateParticles(mesh: THREE.Mesh, pointSize: number, pointPerEdge: nu
     triangleGeometry.setAttribute("seed", new THREE.BufferAttribute(seeds, 1));
     triangleGeometry.setAttribute("directionChangeSpeed", new THREE.BufferAttribute(directionChangeSpeed, 1));
     triangleGeometry.setAttribute("turbulence", new THREE.BufferAttribute(turbulence, 1));
+    console.log("triangleGeometry", triangleGeometry);
     // const particles = new THREE.Points(geometry, shaderMaterial);
     return new THREE.Points(triangleGeometry, shaderMaterial);
 }
