@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'SelfDeception';
+  src: url('../static/fonts/SelfDeceptionRegular-ALLWA.ttf') format('truetype');
+}
+
 #c {
   height: 100vh;
   width: 100vw;
@@ -41,6 +46,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'SelfDeception';
+    font-size: 4rem;
+    font-weight: 200;
 }
 
 .hud .text-container p {
@@ -49,6 +57,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-size: 1.5rem;
 }
 
 .hud .placeholder {

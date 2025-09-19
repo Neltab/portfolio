@@ -54,14 +54,17 @@ function generateParticles(mesh: THREE.Mesh, pointSize: number, pointPerEdge: nu
     const seeds = new Float32Array(triangleGeometry.attributes.position.count);
     const directionChangeSpeed = new Float32Array(triangleGeometry.attributes.position.count);
     const turbulence = new Float32Array(triangleGeometry.attributes.position.count);
+    const lifetime = new Float32Array(triangleGeometry.attributes.position.count);
     for (let i = 0; i < seeds.length; i++) {
         seeds[i] = Math.random();
         directionChangeSpeed[i] = Math.random() * 0.2;
         turbulence[i] = Math.random() * 0.15;
+        lifetime[i] = Math.random() * 7 + 3;
     }
     triangleGeometry.setAttribute("seed", new THREE.BufferAttribute(seeds, 1));
     triangleGeometry.setAttribute("directionChangeSpeed", new THREE.BufferAttribute(directionChangeSpeed, 1));
     triangleGeometry.setAttribute("turbulence", new THREE.BufferAttribute(turbulence, 1));
+    triangleGeometry.setAttribute("lifetime", new THREE.BufferAttribute(lifetime, 1));
     console.log("triangleGeometry", triangleGeometry);
     // const particles = new THREE.Points(geometry, shaderMaterial);
     return new THREE.Points(triangleGeometry, shaderMaterial);

@@ -4,7 +4,7 @@ import timer from "../timer";
 import camera from "../camera";
 import { CurrentUpdate } from "../helpers/updateLoop";
 import BezierCurve from "./bezierCurve";
-import { CAMERA_BENCH_POSITION, CAMERA_START_POSITION, CONTROL_POINTS } from "../shared/positions";
+import { CONTROL_POINTS } from "../shared/positions";
 
 type Curves = {
     [start: number]: {
@@ -48,10 +48,10 @@ class Travelling {
 
     convertToTravelingCurves = (positions: typeof TRAVELLING) => {
         const curves = {} as Curves;
-        for (const place in positions) {
-            curves[place] = {};
-            for (const place2 in positions[place]) {
-                curves[place][place2] = new BezierCurve(TRAVELLING[place][place2], CONTROL_POINTS[place][place2]);
+        for (const start in positions) {
+            curves[start] = {};
+            for (const end in positions[start]) {
+                curves[start][end] = new BezierCurve(TRAVELLING[start][end], CONTROL_POINTS[start][end]);
             }
         }
         return curves;
@@ -59,9 +59,9 @@ class Travelling {
 
     getCurves() {
         const group = new THREE.Group();
-        for (const place in this.curves) {
-            for (const place2 in this.curves[place]) {
-                const curve = this.curves[place][place2];
+        for (const start in this.curves) {
+            for (const end in this.curves[start]) {
+                const curve = this.curves[start][end];
                 group.add(curve.curve);
             }
         }
