@@ -3,7 +3,7 @@ import * as THREE from "three";
 import timer from "../timer";
 import camera from "../camera";
 import { CurrentUpdate } from "../helpers/updateLoop";
-import BezierCurve from "./BezierCurve";
+import BezierCurve from "./bezierCurve";
 import { CAMERA_BENCH_POSITION, CAMERA_START_POSITION, CONTROL_POINTS } from "../shared/positions";
 
 type Curves = {
@@ -23,6 +23,7 @@ class Travelling {
     }
 
     travelTo(place: number, duration: number = 7.5) {
+        if(!this.isTravelling && (!this.curves[this.currentPlace] || !this.curves[this.currentPlace][place])) return () => {};
         const curve = this.curves[this.currentPlace][place];
         this.isTravelling = true;
         const travelFunction = this.travelAlongCurve(curve, timer.getElapsed(), duration);

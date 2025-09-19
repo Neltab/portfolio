@@ -28,7 +28,7 @@ export const tick = async () => {
     updateLoop.update(elapsedTime);
 
     renderer.render(scene, camera);
-    controls.update();
+    // controls.update();
     stats.end();
     requestAnimationFrame(tick);
 };

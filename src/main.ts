@@ -31,16 +31,25 @@ async function main() {
     document.addEventListener('keydown', (event) => {
         console.log(event.key);
         switch (event.key) {
-            case 'a':
+            case 'b':
                 updateLoop.push(travelling.travelTo(PLACES.BENCH, 3.5));
                 break;
-            case 'z':
+            case 'p':
                 updateLoop.push(travelling.travelTo(PLACES.PATH, 3.5));
                 break;
-            case 'e':
+            case 'l':
                 updateLoop.push(travelling.travelTo(PLACES.LAKE.ENTRANCE, 2));
                 break;
-            case 'r':
+            case 'n':
+                updateLoop.push(travelling.travelTo(PLACES.LAKE.BENCH, 2));
+                break;
+            case '^':
+                updateLoop.push(travelling.travelTo(PLACES.LAKE.PATH, 2));
+                break;
+            case 'j':
+                updateLoop.push(travelling.travelTo(PLACES.LAKE.HOUSE, 2));
+                break;
+            case 'h':
                 updateLoop.push(travelling.travelTo(PLACES.HOUSE, 5.5));
                 break;
         }
@@ -53,7 +62,7 @@ async function main() {
     scene.add(hemisphereLight);
 
     // scene.add(axesHelper);
-    const start = PLACES.ENTRANCE;
+    const start = PLACES.LAKE.HOUSE;
     const end = PLACES.HOUSE;
     const controlPoints = CONTROL_POINTS[start][end];
     const points = TRAVELLING[start][end];
@@ -62,14 +71,14 @@ async function main() {
 
     points.forEach((point, index) => {
         const subFolder = bezierFolder.addFolder(`Point ${index}`);
-        subFolder.add(point, "x", -15, 15).onChange(() => {scene.remove(oldCurve); oldCurve = curve.curve; scene.add(oldCurve)});
-        subFolder.add(point, "z", -10, 10).onChange(() => {scene.remove(oldCurve); oldCurve = curve.curve; scene.add(oldCurve)});
+        subFolder.add(point, "x", -15, 15, 0.05).onChange(() => {scene.remove(oldCurve); oldCurve = curve.curve; scene.add(oldCurve)});
+        subFolder.add(point, "z", -15, 15, 0.05).onChange(() => {scene.remove(oldCurve); oldCurve = curve.curve; scene.add(oldCurve)});
     });
 
     controlPoints.forEach((point, index) => {
         const subFolder = bezierFolder.addFolder(`Control Point ${index}`);
-        subFolder.add(point, "x", -15, 15).onChange(() => {scene.remove(oldCurve); oldCurve = curve.curve; scene.add(oldCurve)});
-        subFolder.add(point, "z", -10, 10).onChange(() => {scene.remove(oldCurve); oldCurve = curve.curve; scene.add(oldCurve)});
+        subFolder.add(point, "x", -15, 15, 0.05).onChange(() => {scene.remove(oldCurve); oldCurve = curve.curve; scene.add(oldCurve)});
+        subFolder.add(point, "z", -15, 15, 0.05).onChange(() => {scene.remove(oldCurve); oldCurve = curve.curve; scene.add(oldCurve)});
     });
 
     scene.add(oldCurve);
