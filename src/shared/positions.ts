@@ -13,6 +13,12 @@ export const PLACES = {
     }
 }
 
+export const UI_POSITIONS = {
+    LEFT: 1,
+    RIGHT: 2,
+    BOTH: 3,
+};
+
 export const BENCH_POSITION = new THREE.Vector3(0, 0.85, 11);
 export const BENCH_ROTATION = new THREE.Euler(0, THREE.MathUtils.degToRad(180), 0, "XYZ");
 

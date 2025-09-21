@@ -4,7 +4,7 @@ import garden from "./meshes/garden";
 import violin from "./meshes/violin";
 import bench from "./meshes/bench";
 import { ambientLight, hemisphereLight } from "./lights";
-import { tick, updateLoop } from "./timer";
+import timer, { tick, updateLoop } from "./timer";
 import { CONTROL_POINTS, PLACES, TRAVELLING } from "./shared/positions";
 import axesHelper from "./helpers/axesHelper";
 
@@ -84,6 +84,7 @@ async function main() {
     // scene.add(oldCurve);
 
     tick();
+    garden.material.uniforms.loadedTime.value = timer.getElapsed();
 }
 
 main();

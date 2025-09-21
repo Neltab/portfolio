@@ -1,4 +1,4 @@
-import { PLACES, UI_POSITIONS } from "../shared/positions";
+import { PLACES, UI_POSITIONS} from "../shared/positions";
 
 const LAKE_TRANSLATIONS = {
     title: "The Lake",
@@ -9,7 +9,13 @@ const LAKE_TRANSLATIONS = {
 export default {
     [PLACES.ENTRANCE]: {
         title: "The Entrance",
-        description: "",
+        description: `
+            <p>Welcome to my humble garden, were you can learn more about a young developper as you wander aroung.</p>
+            <p>Have a sit on the bench and discover my hobbies,</p>
+            <p>Follow the path across the river and heading to my future,</p>
+            <p>Take a tour in the house and through an exposition of my projects,</p>
+            <p>Or dive into your reflection in the lake and into my past experiences.</p>
+        `,
         position: UI_POSITIONS.RIGHT,
     },
     [PLACES.BENCH]: {

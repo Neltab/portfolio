@@ -5,6 +5,8 @@ import camera from "../camera";
 import { CurrentUpdate } from "../helpers/updateLoop";
 import BezierCurve from "./bezierCurve";
 import { CONTROL_POINTS } from "../shared/positions";
+import en from "../texts/en";
+import fr from "../texts/fr";
 
 type Curves = {
     [start: number]: {
@@ -16,10 +18,21 @@ class Travelling {
     currentPlace: number;
     curves: Curves;
     isTravelling: boolean;
+    uiTitle: HTMLElement | null;
+    uiDescriptionLeft: HTMLElement | null;
+    uiDescriptionRight: HTMLElement | null;
     constructor(currentPlace: number) {
         this.currentPlace = currentPlace;
         this.curves = this.convertToTravelingCurves(TRAVELLING);
         this.isTravelling = false;
+        this.uiTitle = document.getElementById("title");
+        this.uiDescriptionLeft = document.getElementById("description-left");
+        this.uiDescriptionRight = document.getElementById("description-right");
+
+        if (this.uiTitle && this.uiDescriptionLeft && this.uiDescriptionRight) {
+            this.uiTitle.innerHTML = en[currentPlace].title;
+            this.uiDescriptionLeft.innerHTML = en[currentPlace].description;
+        }
     }
 
     travelTo(place: number, duration: number = 7.5) {

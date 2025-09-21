@@ -32,7 +32,7 @@ body {
 }
 
 .hud h1,
-.hud p {
+.hud .text-container div {
     background-color: rgba(16, 16, 16, 0.5);
     color: white;
     padding: 12px;
@@ -45,8 +45,13 @@ body {
     width: 80%;
 }
 
-.hud .text-container * {
+.hud .text-container div {
     width: 350px;
+}
+
+.hud *:empty {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .hud h1 {
@@ -75,10 +80,11 @@ body {
     bottom: -13px;
 }
 
-.hud .text-container p {
+.hud .text-container div {
     height: 500px;
     text-align: justify;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     font-size: 1.5rem;

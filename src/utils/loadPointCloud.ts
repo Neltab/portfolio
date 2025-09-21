@@ -39,7 +39,7 @@ function generateParticles(mesh: THREE.Mesh, pointSize: number, pointPerEdge: nu
             time: { value: 0 },
             pointSize: { value: pointSize },
             map: { value: texture }, // Use the extracted texture
-            loadedTime: { value: 2 },
+            loadedTime: { value: 10 },
         },
         vertexShader,
         fragmentShader,
