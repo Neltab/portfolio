@@ -3,6 +3,10 @@
   src: url('../static/fonts/SelfDeceptionRegular-ALLWA.ttf') format('truetype');
 }
 
+html {
+    background-color: black;
+}
+
 #c {
   height: 100vh;
   width: 100vw;
@@ -19,6 +23,7 @@ body {
 .hud {
     position: absolute;
     display: flex;
+    flex-direction: column;
     justify-content: space-around;
     align-items: center;
     width: 100%;
@@ -26,29 +31,48 @@ body {
     pointer-events: none;
 }
 
+.hud h1,
+.hud p {
+    background-color: rgba(16, 16, 16, 0.5);
+    color: white;
+    padding: 12px;
+}
+
 .hud .text-container {
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    width: 350px;
-    height: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 80%;
 }
 
 .hud .text-container * {
-    background-color: rgba(16, 16, 16, 0.5);
-    color: white;
-    font-size: 2rem;
-    padding: 16px;
+    width: 350px;
 }
 
-.hud .text-container h1 {
-    height: 50px;
+.hud h1 {
+    height: 100px;
+    width: 809px;
     display: flex;
     justify-content: center;
-    align-items: center;
     font-family: 'SelfDeception';
     font-size: 4rem;
     font-weight: 200;
+    text-align: center;
+    position: relative;
+}
+
+.hud h1::before {
+    content: url('../static/ornaments/Upper-ornament.png');
+    height: 50px;
+    position: absolute;
+    top: -33px;
+}
+
+.hud h1::after {
+    content: url('../static/ornaments/Lower-ornament.png');
+    height: 50px;
+    position: absolute;
+    bottom: -13px;
 }
 
 .hud .text-container p {

@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { vertexShader, fragmentShader } from "../shared/shaders";
-import { BufferGeometryUtils } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+import timer from "../timer";
 
 const loadPointCloud = (url: string, pointSize: number[] = [0.05], pointPerEdge: number[] = [4]) => {
     return new Promise<THREE.Group>((resolve, reject) => {
@@ -39,6 +39,7 @@ function generateParticles(mesh: THREE.Mesh, pointSize: number, pointPerEdge: nu
             time: { value: 0 },
             pointSize: { value: pointSize },
             map: { value: texture }, // Use the extracted texture
+            loadedTime: { value: 2 },
         },
         vertexShader,
         fragmentShader,
