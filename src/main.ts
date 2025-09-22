@@ -28,33 +28,6 @@ async function main() {
 
     console.log("bench", bench);
 
-    document.addEventListener('keydown', (event) => {
-        console.log(event.key);
-        switch (event.key) {
-            case 'b':
-                updateLoop.push(travelling.travelTo(PLACES.BENCH, 3.5));
-                break;
-            case 'p':
-                updateLoop.push(travelling.travelTo(PLACES.PATH, 3.5));
-                break;
-            case 'l':
-                updateLoop.push(travelling.travelTo(PLACES.LAKE.ENTRANCE, 2));
-                break;
-            case 'n':
-                updateLoop.push(travelling.travelTo(PLACES.LAKE.BENCH, 2));
-                break;
-            case '^':
-                updateLoop.push(travelling.travelTo(PLACES.LAKE.PATH, 2));
-                break;
-            case 'j':
-                updateLoop.push(travelling.travelTo(PLACES.LAKE.HOUSE, 2));
-                break;
-            case 'h':
-                updateLoop.push(travelling.travelTo(PLACES.HOUSE, 5.5));
-                break;
-        }
-    });
-
     // scene.add(travelling.getCurves());
 
     // Lights

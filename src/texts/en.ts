@@ -2,7 +2,11 @@ import { PLACES, UI_POSITIONS} from "../shared/positions";
 
 const LAKE_TRANSLATIONS = {
     title: "The Lake",
-    description: "",
+    description: `
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    `,
     position: UI_POSITIONS.BOTH,
 };
 
@@ -20,17 +24,29 @@ export default {
     },
     [PLACES.BENCH]: {
         title: "The Bench",
-        description: "",
+        description: `
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        `,
         position: UI_POSITIONS.LEFT,
     },
     [PLACES.PATH]: {
         title: "The Path",
-        description: "",
+        description: `
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        `,
         position: UI_POSITIONS.BOTH,
     },
     [PLACES.HOUSE]: {
         title: "The House",
-        description: "",
+        description: `
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        `,
         position: UI_POSITIONS.RIGHT,
     },
     [PLACES.LAKE.ENTRANCE]: LAKE_TRANSLATIONS,

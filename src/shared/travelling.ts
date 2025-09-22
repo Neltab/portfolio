@@ -1,10 +1,10 @@
 import { PLACES, TRAVELLING } from "../shared/positions";
 import * as THREE from "three";
-import timer from "../timer";
+import timer, { updateLoop} from "../timer";
 import camera from "../camera";
 import { CurrentUpdate } from "../helpers/updateLoop";
 import BezierCurve from "./bezierCurve";
-import { CONTROL_POINTS } from "../shared/positions";
+import { CONTROL_POINTS, DESTINATIONS } from "../shared/positions";
 import en from "../texts/en";
 import fr from "../texts/fr";
 
@@ -21,6 +21,8 @@ class Travelling {
     uiTitle: HTMLElement | null;
     uiDescriptionLeft: HTMLElement | null;
     uiDescriptionRight: HTMLElement | null;
+    uiNavigationMenu: HTMLElement | null;
+
     constructor(currentPlace: number) {
         this.currentPlace = currentPlace;
         this.curves = this.convertToTravelingCurves(TRAVELLING);
@@ -28,17 +30,15 @@ class Travelling {
         this.uiTitle = document.getElementById("title");
         this.uiDescriptionLeft = document.getElementById("description-left");
         this.uiDescriptionRight = document.getElementById("description-right");
-
-        if (this.uiTitle && this.uiDescriptionLeft && this.uiDescriptionRight) {
-            this.uiTitle.innerHTML = en[currentPlace].title;
-            this.uiDescriptionLeft.innerHTML = en[currentPlace].description;
-        }
+        this.uiNavigationMenu = document.getElementById("navigation-menu");
+        this.updateUI();
     }
 
     travelTo(place: number, duration: number = 7.5) {
         if(!this.isTravelling && (!this.curves[this.currentPlace] || !this.curves[this.currentPlace][place])) return () => {};
         const curve = this.curves[this.currentPlace][place];
         this.isTravelling = true;
+        this.hideUI();
         const travelFunction = this.travelAlongCurve(curve, timer.getElapsed(), duration);
         this.currentPlace = place;
         return travelFunction;
@@ -48,6 +48,8 @@ class Travelling {
         const time = elapsedTime - startTime;
         if (time > duration) {
             this.isTravelling = false;
+            this.updateUI();
+            this.showUI();
             update.remove();
             return;
         }
@@ -79,6 +81,34 @@ class Travelling {
             }
         }
         return group;
+    }
+
+    hideUI() {
+        this.uiTitle?.classList.add("hidden");
+        this.uiDescriptionLeft?.classList.add("hidden");
+        this.uiDescriptionRight?.classList.add("hidden");
+        this.uiNavigationMenu?.classList.add("hidden");
+    }
+
+    showUI() {
+        this.uiTitle?.classList.remove("hidden");
+        this.uiDescriptionLeft?.classList.remove("hidden");
+        this.uiDescriptionRight?.classList.remove("hidden");
+        this.uiNavigationMenu?.classList.remove("hidden");
+    }
+
+    updateUI() {
+        if (this.uiTitle && this.uiDescriptionLeft && this.uiDescriptionRight && this.uiNavigationMenu) {
+            this.uiTitle.innerHTML = en[this.currentPlace].title;
+            this.uiDescriptionLeft.innerHTML = en[this.currentPlace].description;
+            this.uiNavigationMenu.innerHTML = "";
+            for(const destination of DESTINATIONS[this.currentPlace]) {
+                const destinationElement = document.createElement("p");
+                destinationElement.innerHTML = destination.name;
+                destinationElement.onclick = () => updateLoop.push(this.travelTo(destination.position));
+                this.uiNavigationMenu?.appendChild(destinationElement);
+            }
+        }
     }
 }
 

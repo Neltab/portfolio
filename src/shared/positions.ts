@@ -6,12 +6,40 @@ export const PLACES = {
     PATH: 2,
     HOUSE: 3,
     LAKE: {
-        ENTRANCE: 100,
-        BENCH: 101,
-        PATH: 102,
-        HOUSE: 103,
+        ENTRANCE: 10,
+        BENCH: 11,
+        PATH: 12,
+        HOUSE: 13,
     }
 }
+
+export type Destination = {
+    name: string,
+    position: number,
+}
+
+const BENCH_DESTINATION: Destination = { name: "Bench", position: PLACES.BENCH };
+const PATH_DESTINATION: Destination = { name: "Path", position: PLACES.PATH };
+const HOUSE_DESTINATION: Destination = { name: "House", position: PLACES.HOUSE };
+const LAKE_ENTRANCE_DESTINATION: Destination = { name: "Lake", position: PLACES.LAKE.ENTRANCE };
+const LAKE_BENCH_DESTINATION: Destination = { name: "Lake", position: PLACES.LAKE.BENCH };
+const LAKE_PATH_DESTINATION: Destination = { name: "Lake", position: PLACES.LAKE.PATH };
+const LAKE_HOUSE_DESTINATION: Destination = { name: "Lake", position: PLACES.LAKE.HOUSE };
+
+export type Destinations = {
+    [start: number]: Destination[]
+}
+
+export const DESTINATIONS: Destinations = {
+    [PLACES.ENTRANCE]: [BENCH_DESTINATION, PATH_DESTINATION, HOUSE_DESTINATION, LAKE_ENTRANCE_DESTINATION],
+    [PLACES.BENCH]: [PATH_DESTINATION, HOUSE_DESTINATION, LAKE_BENCH_DESTINATION],
+    [PLACES.PATH]: [BENCH_DESTINATION, HOUSE_DESTINATION, LAKE_PATH_DESTINATION],
+    [PLACES.HOUSE]: [BENCH_DESTINATION, PATH_DESTINATION, LAKE_HOUSE_DESTINATION],
+    [PLACES.LAKE.ENTRANCE]: [BENCH_DESTINATION, PATH_DESTINATION, HOUSE_DESTINATION],
+    [PLACES.LAKE.BENCH]: [BENCH_DESTINATION, PATH_DESTINATION, HOUSE_DESTINATION],
+    [PLACES.LAKE.PATH]: [BENCH_DESTINATION, PATH_DESTINATION, HOUSE_DESTINATION],
+    [PLACES.LAKE.HOUSE]: [BENCH_DESTINATION, PATH_DESTINATION, HOUSE_DESTINATION],
+};
 
 export const UI_POSITIONS = {
     LEFT: 1,
