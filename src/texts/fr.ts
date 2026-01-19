@@ -1,31 +1,35 @@
-import { PLACES, UI_POSITIONS } from "../shared/positions";
+import { PLACES } from "../shared/positions";
 
 const LAKE_TRANSLATIONS = {
     title: "The Lake",
-    description: "",
-    position: UI_POSITIONS.BOTH,
+    leftDescription: "",
+    rightDescription: "",
 };
 
 export default {
     [PLACES.ENTRANCE]: {
         title: "The Entrance",
-        description: "",
-        position: UI_POSITIONS.RIGHT,
+        leftDescription: "",
+        rightDescription: "",
+        
     },
     [PLACES.BENCH]: {
         title: "The Bench",
-        description: "",
-        position: UI_POSITIONS.LEFT,
+        leftDescription: "",
+        rightDescription: "",
+        
     },
     [PLACES.PATH]: {
         title: "The Path",
-        description: "",
-        position: UI_POSITIONS.BOTH,
+        leftDescription: "",
+        rightDescription: "",
+        
     },
     [PLACES.HOUSE]: {
         title: "The House",
-        description: "",
-        position: UI_POSITIONS.RIGHT,
+        leftDescription: "",
+        rightDescription: "",
+        
     },
     [PLACES.LAKE.ENTRANCE]: LAKE_TRANSLATIONS,
     [PLACES.LAKE.BENCH]: LAKE_TRANSLATIONS,

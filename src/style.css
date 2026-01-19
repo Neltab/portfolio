@@ -47,11 +47,12 @@ body {
 
 .hud .text-container div {
     width: 350px;
+    transition: opacity 0ms ease-in 1s;
 }
 
 .hud *:empty {
-    opacity: 0;
     pointer-events: none;
+    display: none;
 }
 
 .hud h1 {
@@ -64,6 +65,8 @@ body {
     font-weight: 200;
     text-align: center;
     position: relative;
+    transition: transform 500ms ease-in 500ms;
+    transform: translateY(0) scale(1);
 }
 
 .hud h1::before {
@@ -100,6 +103,14 @@ body {
     background-color: rgba(16, 16, 16, 0);
     color: white;
     pointer-events: all;
+}
+
+.hud h1.hidden {
+    transform: translateY(100px) scale(2);
+}
+
+.hud .text-container div.hidden {
+    transition: opacity 0s ease-in;
 }
 
 .hidden {

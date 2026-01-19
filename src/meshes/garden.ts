@@ -1,4 +1,4 @@
-import loadPointCloud from "../utils/loadPointCloud";
+import { loadPointCloud } from "../utils/pointCloud";
 import { updateLoop } from "../timer";
 import { MathUtils } from "three/src/math/MathUtils.js";
 

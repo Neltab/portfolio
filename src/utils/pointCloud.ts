@@ -2,7 +2,6 @@ import * as THREE from "three";
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { vertexShader, fragmentShader } from "../shared/shaders";
-import timer from "../timer";
 
 const loadPointCloud = (url: string, pointSize: number[] = [0.05], pointPerEdge: number[] = [4]) => {
     return new Promise<THREE.Group>((resolve, reject) => {
@@ -31,9 +30,7 @@ const loadPointCloud = (url: string, pointSize: number[] = [0.05], pointPerEdge:
 function generateParticles(mesh: THREE.Mesh, pointSize: number, pointPerEdge: number) {
     const geometry = mesh.geometry;
 
-    // Extract the texture from the material
     const texture = mesh.material.map;
-    // Create shader material
     const shaderMaterial = new THREE.ShaderMaterial({
         uniforms: {
             time: { value: 0 },
@@ -49,25 +46,26 @@ function generateParticles(mesh: THREE.Mesh, pointSize: number, pointPerEdge: nu
     const { allPoints, allUvs } = generatePointsForAllTrianglesIndexed(geometry, pointPerEdge);
 
     const triangleGeometry = new THREE.BufferGeometry();
-    triangleGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(allPoints), 3));
-    triangleGeometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(allUvs), 2));
-    triangleGeometry.setAttribute("initialPosition", triangleGeometry.attributes.position.clone());
-    const seeds = new Float32Array(triangleGeometry.attributes.position.count);
-    const directionChangeSpeed = new Float32Array(triangleGeometry.attributes.position.count);
-    const turbulence = new Float32Array(triangleGeometry.attributes.position.count);
-    const lifetime = new Float32Array(triangleGeometry.attributes.position.count);
+
+    const seeds = new Float32Array(allPoints);
+    const directionChangeSpeed = new Float32Array(allPoints);
+    const turbulence = new Float32Array(allPoints);
+    const lifetime = new Float32Array(allPoints);
     for (let i = 0; i < seeds.length; i++) {
         seeds[i] = Math.random();
         directionChangeSpeed[i] = Math.random() * 0.2;
         turbulence[i] = Math.random() * 0.15;
         lifetime[i] = Math.random() * 7 + 3;
     }
+
+    triangleGeometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(allPoints), 3));
+    triangleGeometry.setAttribute('uv', new THREE.BufferAttribute(new Float32Array(allUvs), 2));
+    triangleGeometry.setAttribute("initialPosition", triangleGeometry.attributes.position.clone());
     triangleGeometry.setAttribute("seed", new THREE.BufferAttribute(seeds, 1));
     triangleGeometry.setAttribute("directionChangeSpeed", new THREE.BufferAttribute(directionChangeSpeed, 1));
     triangleGeometry.setAttribute("turbulence", new THREE.BufferAttribute(turbulence, 1));
     triangleGeometry.setAttribute("lifetime", new THREE.BufferAttribute(lifetime, 1));
-    console.log("triangleGeometry", triangleGeometry);
-    // const particles = new THREE.Points(geometry, shaderMaterial);
+
     return new THREE.Points(triangleGeometry, shaderMaterial);
 }
 
@@ -86,19 +84,18 @@ function generatePointsForTriangle(
             const u = i / n;
             const v = j / n;
             const w = k / n;
-            // Interpolate position
+
             const pointX = u * ax + v * bx + w * cx;
             const pointY = u * ay + v * by + w * cy;
             const pointZ = u * az + v * bz + w * cz;
-            // points.push(pointX, pointY, pointZ);
+
             points[pointIndex++] = pointX;
             points[pointIndex++] = pointY;
             points[pointIndex++] = pointZ;
 
-            // Interpolate UV
             const uvX = u * au + v * bu + w * cu;
             const uvY = u * av + v * bv + w * cv;
-            // uvs.push(uvX, uvY);
+
             uvs[uvIndex++] = uvX;
             uvs[uvIndex++] = uvY;
         }
@@ -129,14 +126,11 @@ function generatePointsForAllTrianglesIndexed(geometry, n) {
     let pointIndex = 0;
     let uvIndex = 0;
 
-    // Loop through all triangles
     for (let triangleIndex = 0; triangleIndex < index.array.length; triangleIndex += 3) {
-        // Get the vertex indices for this triangle
         const i1 = index.array[triangleIndex];
         const i2 = index.array[triangleIndex + 1];
         const i3 = index.array[triangleIndex + 2];
 
-        // Extract positions for the triangle
         const ax = positionAttribute.getX(i1);
         const ay = positionAttribute.getY(i1);
         const az = positionAttribute.getZ(i1);
@@ -149,7 +143,6 @@ function generatePointsForAllTrianglesIndexed(geometry, n) {
         const cy = positionAttribute.getY(i3);
         const cz = positionAttribute.getZ(i3);
 
-        // Extract UVs for the triangle
         const au = uvAttribute.getX(i1);
         const av = uvAttribute.getY(i1);
 
@@ -159,14 +152,12 @@ function generatePointsForAllTrianglesIndexed(geometry, n) {
         const cu = uvAttribute.getX(i3);
         const cv = uvAttribute.getY(i3);
 
-        // Generate points and UVs for this triangle
         const { points, uvs: generatedUvs } = generatePointsForTriangle(
             ax, ay, az, bx, by, bz, cx, cy, cz,
             au, av, bu, bv, cu, cv,
             n, pointNumber, uvNumber
         );
 
-        // allPoints.push(ax, ay, az, bx, by, bz, cx, cy, cz);
         for (let i = 0; i < points.length; i++) {
             allPoints[pointIndex++] = points[i];
         }
@@ -182,4 +173,7 @@ function getTotalIterations(n) {
     return (n-1) * (n - 2) / 2;
 }
 
-export default loadPointCloud;
+export { 
+    loadPointCloud,
+    generateParticles,
+} 

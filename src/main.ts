@@ -1,8 +1,11 @@
 
 import scene from "./scene";
+import camera from "./camera";
+import * as THREE from "three";
 import garden from "./meshes/garden";
 import violin from "./meshes/violin";
 import bench from "./meshes/bench";
+import lake from "./meshes/lake";
 import { ambientLight, hemisphereLight } from "./lights";
 import timer, { tick, updateLoop } from "./timer";
 import { CONTROL_POINTS, PLACES, TRAVELLING } from "./shared/positions";
@@ -27,6 +30,8 @@ async function main() {
     scene.add(bench);
 
     console.log("bench", bench);
+
+    scene.add(lake);
 
     // scene.add(travelling.getCurves());
 
@@ -58,6 +63,27 @@ async function main() {
 
     tick();
     garden.material.uniforms.loadedTime.value = timer.getElapsed();
+
+    window.addEventListener('mousemove', (event) => {
+        // Calculate mouse position in normalized device coordinates
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+        // Update the raycaster
+        raycaster.setFromCamera(mouse, camera);
+
+        // Perform raycasting
+        const objectsToRaycast = scene.children.filter(obj => obj === violin);
+        const intersects = raycaster.intersectObjects(objectsToRaycast);
+
+        if (intersects.length > 0) {
+            // Handle the intersection (e.g., highlight or log the object)
+            const intersect = intersects[0];
+            intersect.object.rotation.y += 0.01;
+        }
+    });
 }
 
 main();

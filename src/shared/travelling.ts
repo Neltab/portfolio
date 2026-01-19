@@ -92,22 +92,28 @@ class Travelling {
 
     showUI() {
         this.uiTitle?.classList.remove("hidden");
-        this.uiDescriptionLeft?.classList.remove("hidden");
-        this.uiDescriptionRight?.classList.remove("hidden");
+        if (this.uiDescriptionLeft && this.uiDescriptionLeft.innerHTML) {
+            this.uiDescriptionLeft?.classList.remove("hidden");
+        }
+        if (this.uiDescriptionRight && this.uiDescriptionRight.innerHTML) {
+            this.uiDescriptionRight?.classList.remove("hidden");
+        }
         this.uiNavigationMenu?.classList.remove("hidden");
     }
 
     updateUI() {
-        if (this.uiTitle && this.uiDescriptionLeft && this.uiDescriptionRight && this.uiNavigationMenu) {
-            this.uiTitle.innerHTML = en[this.currentPlace].title;
-            this.uiDescriptionLeft.innerHTML = en[this.currentPlace].description;
-            this.uiNavigationMenu.innerHTML = "";
-            for(const destination of DESTINATIONS[this.currentPlace]) {
-                const destinationElement = document.createElement("p");
-                destinationElement.innerHTML = destination.name;
-                destinationElement.onclick = () => updateLoop.push(this.travelTo(destination.position));
-                this.uiNavigationMenu?.appendChild(destinationElement);
-            }
+        if (!this.uiTitle || !this.uiDescriptionLeft || !this.uiDescriptionRight || !this.uiNavigationMenu) {
+            return;
+        }
+        this.uiTitle.innerHTML = en[this.currentPlace].title;
+        this.uiDescriptionLeft.innerHTML = en[this.currentPlace].leftDescription;
+        this.uiDescriptionRight.innerHTML = en[this.currentPlace].rightDescription;
+        this.uiNavigationMenu.innerHTML = "";
+        for(const destination of DESTINATIONS[this.currentPlace]) {
+            const destinationElement = document.createElement("p");
+            destinationElement.innerHTML = destination.name;
+            destinationElement.onclick = () => updateLoop.push(this.travelTo(destination.position));
+            this.uiNavigationMenu?.appendChild(destinationElement);
         }
     }
 }

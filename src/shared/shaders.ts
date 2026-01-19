@@ -58,15 +58,15 @@ const vertexShader = `
         gl_Position = projectionMatrix * modelViewMatrix * vec4(displacedPosition, 1.0);
         vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
         float distanceRatio = 300.0 / -mvPosition.z;
-        vDiscard = 1.0;
+        vDiscard = 0.0;
         float timeSinceLoaded = time - loadedTime;
         float distanceFromCenter = distance(vec3(0.0), displacedPosition);
         float farthestDistance = 30.0;
         float fadeInDuration = 2.0;
         float fadeIn = min(1.0, (timeSinceLoaded / fadeInDuration));
-        if (distanceFromCenter < (farthestDistance * fadeIn)) {
-            vDiscard = 0.0;
-        }
+        // if (distanceFromCenter < (farthestDistance * fadeIn)) {
+        //     vDiscard = 0.0;
+        // }
 
         // gl_PointSize = pointSize * (300.0 / -mvPosition.z) * (1.0 + (seed - 0.5));
         gl_PointSize = pointSize * distanceRatio * lifetimePercent;
