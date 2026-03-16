@@ -6,6 +6,7 @@ import scene from "./scene";
 import controls from "./controls";
 import stats from "./utils/stats";
 import UpdateLoop from "./helpers/updateLoop";
+import { isDebugEnabled } from "./debug/curveDebug";
 
 const timer = new Timer();
 
@@ -28,7 +29,7 @@ export const tick = async () => {
     updateLoop.update(elapsedTime);
 
     renderer.render(scene, camera);
-    // controls.update();
+    if (isDebugEnabled) controls.update();
     stats.end();
     requestAnimationFrame(tick);
 };
