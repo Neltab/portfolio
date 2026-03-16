@@ -4,7 +4,7 @@ import timer, { updateLoop} from "../timer";
 import camera from "../camera";
 import { CurrentUpdate } from "../helpers/updateLoop";
 import BezierCurve from "./bezierCurve";
-import { CONTROL_POINTS, DESTINATIONS } from "../shared/positions";
+import { CONTROL_POINTS, CONTROL_POINTS_LOOKAT, DESTINATIONS, TRAVELLING_LOOKAT } from "../shared/positions";
 import en, { OBJECTS as EN_OBJECTS } from "../texts/en";
 import fr, { OBJECTS as FR_OBJECTS } from "../texts/fr";
 
@@ -17,6 +17,7 @@ type Curves = {
 class Travelling {
     currentPlace: number;
     curves: Curves;
+    lookAtCurves: Curves;
     isTravelling: boolean;
     uiTitle: HTMLElement | null;
     uiDescriptionLeft: HTMLElement | null;
@@ -26,7 +27,8 @@ class Travelling {
 
     constructor(currentPlace: number) {
         this.currentPlace = currentPlace;
-        this.curves = this.convertToTravelingCurves(TRAVELLING);
+        this.curves = this.convertToTravelingCurves(TRAVELLING, CONTROL_POINTS);
+        this.lookAtCurves = this.convertToTravelingCurves(TRAVELLING_LOOKAT, CONTROL_POINTS_LOOKAT);
         this.isTravelling = false;
         this.uiTitle = document.getElementById("title");
         this.uiDescriptionLeft = document.getElementById("description-left");
@@ -38,16 +40,17 @@ class Travelling {
     travelTo(place: number, duration: number = 7.5) {
         if(!this.isTravelling && (!this.curves[this.currentPlace] || !this.curves[this.currentPlace][place])) return () => {};
         const curve = this.curves[this.currentPlace][place];
+        const lookAtCurve = this.lookAtCurves[this.currentPlace][place];
         this.isTravelling = true;
         this.savedUIState = null;
         this.uiTitle?.closest(".hud")?.classList.remove("object-hover");
         this.hideUI();
-        const travelFunction = this.travelAlongCurve(curve, timer.getElapsed(), duration);
+        const travelFunction = this.travelAlongCurve(curve, lookAtCurve, timer.getElapsed(), duration);
         this.currentPlace = place;
         return travelFunction;
     }
 
-    travelAlongCurve = (curve: BezierCurve, startTime: number, duration: number) => (elapsedTime: number, update: CurrentUpdate) => {
+    travelAlongCurve = (curve: BezierCurve, lookAtCurve: BezierCurve, startTime: number, duration: number) => (elapsedTime: number, update: CurrentUpdate) => {
         const time = elapsedTime - startTime;
         if (time > duration) {
             this.isTravelling = false;
@@ -59,19 +62,17 @@ class Travelling {
         const t1 = Math.min(time / duration, 1);
         const t2 = Math.min(t1 + 0.01, 1);
         const pos = curve.getPointAt(t1);
-        const look = t2 > t1
-            ? curve.getPointAt(t2)
-            : pos.clone().add(curve.getTangentAt(t1));
+        const look = lookAtCurve.getPointAt(t2);
         camera.position.set(pos.x, pos.y, pos.z);
         camera.lookAt(look);
     }
 
-    convertToTravelingCurves = (positions: typeof TRAVELLING) => {
+    convertToTravelingCurves = (positions: typeof TRAVELLING, controlPoints: typeof CONTROL_POINTS) => {
         const curves = {} as Curves;
         for (const start in positions) {
             curves[start] = {};
             for (const end in positions[start]) {
-                curves[start][end] = new BezierCurve(TRAVELLING[start][end], CONTROL_POINTS[start][end]);
+                curves[start][end] = new BezierCurve(positions[start][end], controlPoints[start][end]);
             }
         }
         return curves;

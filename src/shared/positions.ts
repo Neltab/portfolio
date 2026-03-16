@@ -157,3 +157,17 @@ export const CONTROL_POINTS: Positions = {
         [PLACES.HOUSE]: [new THREE.Vector3(5.2, 1.5, 1.25), new THREE.Vector3(3.6, 1.5, 0.85)],
     },
 };
+
+function clonePositions(positions: Positions): Positions {
+    const result: Positions = {};
+    for (const start in positions) {
+        result[start] = {};
+        for (const end in positions[start]) {
+            result[start][end] = positions[start][end].map(v => v.clone().add(new THREE.Vector3(1, 0, 0)));
+        }
+    }
+    return result;
+}
+
+export const TRAVELLING_LOOKAT: Positions = clonePositions(TRAVELLING);
+export const CONTROL_POINTS_LOOKAT: Positions = clonePositions(CONTROL_POINTS);

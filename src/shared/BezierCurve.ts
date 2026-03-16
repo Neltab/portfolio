@@ -89,8 +89,12 @@ class BezierCurve {
     }
 
     get curve() {
+        return this.getCurveVisual(0x00ff00);
+    }
+
+    getCurveVisual(color: number) {
         this.computeCurves();
-        const material = new THREE.LineBasicMaterial({color: 0x00ff00});
+        const material = new THREE.LineBasicMaterial({color, depthTest: false});
         return this.curves.reduce((acc, curve) => {
             const geometry = new THREE.BufferGeometry().setFromPoints(curve.getPoints(100));
             const line = new THREE.Line(geometry, material);
