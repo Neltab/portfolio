@@ -20,38 +20,32 @@ export default {
             <p>Take a tour in the house and through an exposition of my projects,</p>
             <p>Or dive into your reflection in the lake and into my past experiences.</p>
         `,
-        rightDescription: ``,
+        rightDescription: `
+            <p>This website is a work in progress, I'm still working on it so expect a few bugs and some missing textures.</p>
+        `,
     },
     [PLACES.BENCH]: {
         title: "The Bench",
         leftDescription: ``,
-        rightDescription: `           
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        `,
+        rightDescription: ``,
     },
     [PLACES.PATH]: {
         title: "The Path",
         leftDescription: `
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        `,
-        rightDescription: `
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        `,
-    },
-    [PLACES.HOUSE]: {
-        title: "The House",
-        leftDescription: `
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            <p>Here lies a yet to be explored future.</p>
+            <p>The path is misty, filled with uncertainty. Thorny bushes pave some of the way.</p>
+            <p>But the journey will morph the thorns into roses and mist into sunshine.</p>
+            <p>For the explorer thrives in the unknown.</p>
         `,
         rightDescription: ``,
+    },
+    [PLACES.HOUSE]: {
+        title: "The Museum",
+        leftDescription: ``,
+        rightDescription: `            
+            <p>The museum is still in renovation.</p>
+            <p>Past projects can be found in the imaginary place that is <a href="https://github.com/Neltab">GitHub</a>.</p>
+        `,
     },
     [PLACES.LAKE.ENTRANCE]: LAKE_TRANSLATIONS,
     [PLACES.LAKE.BENCH]: LAKE_TRANSLATIONS,

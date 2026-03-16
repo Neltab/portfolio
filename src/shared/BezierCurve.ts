@@ -76,6 +76,18 @@ class BezierCurve {
         }
     }
 
+    getTangentAt(t: number) {
+        const clampedT = Math.max(0, Math.min(t, 1));
+        if (clampedT >= 1) {
+            return this.curves[this.curves.length - 1].getTangentAt(1);
+        }
+        const curveIndex = this.lengths.findIndex((length => clampedT < length)) - 1;
+        const min = this.lengths[curveIndex];
+        const max = this.lengths[curveIndex + 1];
+        const mappedT = (clampedT - min) / (max - min);
+        return this.curves[curveIndex].getTangentAt(mappedT);
+    }
+
     get curve() {
         this.computeCurves();
         const material = new THREE.LineBasicMaterial({color: 0x00ff00});

@@ -53,10 +53,12 @@ class Travelling {
             update.remove();
             return;
         }
-        const t1 = time / duration;
-        const t2 = Math.min((time + duration * 0.01) / duration, 1);
+        const t1 = Math.min(time / duration, 1);
+        const t2 = Math.min(t1 + 0.01, 1);
         const pos = curve.getPointAt(t1);
-        const look = curve.getPointAt(t2);
+        const look = t2 > t1
+            ? curve.getPointAt(t2)
+            : pos.clone().add(curve.getTangentAt(t1));
         camera.position.set(pos.x, pos.y, pos.z);
         camera.lookAt(look);
     }
