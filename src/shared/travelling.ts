@@ -5,8 +5,8 @@ import camera from "../camera";
 import { CurrentUpdate } from "../helpers/updateLoop";
 import BezierCurve from "./bezierCurve";
 import { CONTROL_POINTS, DESTINATIONS } from "../shared/positions";
-import en from "../texts/en";
-import fr from "../texts/fr";
+import en, { OBJECTS as EN_OBJECTS } from "../texts/en";
+import fr, { OBJECTS as FR_OBJECTS } from "../texts/fr";
 
 type Curves = {
     [start: number]: {
@@ -22,6 +22,7 @@ class Travelling {
     uiDescriptionLeft: HTMLElement | null;
     uiDescriptionRight: HTMLElement | null;
     uiNavigationMenu: HTMLElement | null;
+    savedUIState: { title: string, left: string, right: string, nav: string, hiddenElements: string[] } | null = null;
 
     constructor(currentPlace: number) {
         this.currentPlace = currentPlace;
@@ -38,6 +39,8 @@ class Travelling {
         if(!this.isTravelling && (!this.curves[this.currentPlace] || !this.curves[this.currentPlace][place])) return () => {};
         const curve = this.curves[this.currentPlace][place];
         this.isTravelling = true;
+        this.savedUIState = null;
+        this.uiTitle?.closest(".hud")?.classList.remove("object-hover");
         this.hideUI();
         const travelFunction = this.travelAlongCurve(curve, timer.getElapsed(), duration);
         this.currentPlace = place;
@@ -101,6 +104,55 @@ class Travelling {
             this.uiDescriptionRight?.classList.remove("hidden");
         }
         this.uiNavigationMenu?.classList.remove("hidden");
+    }
+
+    showObjectUI(objectKey: string) {
+        if (!this.uiTitle || !this.uiDescriptionLeft || !this.uiDescriptionRight || !this.uiNavigationMenu) {
+            return;
+        }
+        const objectTexts = EN_OBJECTS[objectKey];
+        if (!objectTexts) return;
+
+        if (!this.savedUIState) {
+            const hiddenElements: string[] = [];
+            if (this.uiTitle.classList.contains("hidden")) hiddenElements.push("title");
+            if (this.uiDescriptionLeft.classList.contains("hidden")) hiddenElements.push("left");
+            if (this.uiDescriptionRight.classList.contains("hidden")) hiddenElements.push("right");
+            if (this.uiNavigationMenu.classList.contains("hidden")) hiddenElements.push("nav");
+            this.savedUIState = {
+                title: this.uiTitle.innerHTML,
+                left: this.uiDescriptionLeft.innerHTML,
+                right: this.uiDescriptionRight.innerHTML,
+                nav: this.uiNavigationMenu.innerHTML,
+                hiddenElements,
+            };
+        }
+
+        this.hideUI();
+        this.uiTitle.closest(".hud")?.classList.add("object-hover");
+        this.uiTitle.innerHTML = objectTexts.title;
+        this.uiDescriptionLeft.innerHTML = objectTexts.leftDescription;
+        this.uiDescriptionRight.innerHTML = objectTexts.rightDescription;
+        this.uiNavigationMenu.innerHTML = "";
+        this.showUI();
+    }
+
+    hideObjectUI() {
+        if (!this.savedUIState || !this.uiTitle || !this.uiDescriptionLeft || !this.uiDescriptionRight || !this.uiNavigationMenu) {
+            return;
+        }
+
+        const hiddenElements = this.savedUIState.hiddenElements;
+        this.savedUIState = null;
+
+        this.uiTitle.closest(".hud")?.classList.remove("object-hover");
+        this.hideUI();
+        this.updateUI();
+
+        if (!hiddenElements.includes("title")) this.uiTitle.classList.remove("hidden");
+        if (!hiddenElements.includes("left") && this.uiDescriptionLeft.innerHTML) this.uiDescriptionLeft.classList.remove("hidden");
+        if (!hiddenElements.includes("right") && this.uiDescriptionRight.innerHTML) this.uiDescriptionRight.classList.remove("hidden");
+        if (!hiddenElements.includes("nav")) this.uiNavigationMenu.classList.remove("hidden");
     }
 
     updateUI() {

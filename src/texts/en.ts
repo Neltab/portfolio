@@ -10,6 +10,18 @@ const LAKE_TRANSLATIONS = {
     rightDescription: ``,
 };
 
+export const OBJECTS: { [key: string]: { title: string, leftDescription: string, rightDescription: string } } = {
+    violin: {
+        title: "The Violin",
+        leftDescription: `
+            <p>The violin was always a dream instrument for me.</p>
+            <p>I played the piano when I was younger, but it lacked the freedom violins would give.</p>
+            <p>I finally tried it for the first time in early september of 2025 and kept playing it daily since.</p>
+        `,
+        rightDescription: ``,
+    },
+};
+
 export default {
     [PLACES.ENTRANCE]: {
         title: "The Entrance",
@@ -35,7 +47,7 @@ export default {
             <p>Here lies a yet to be explored future.</p>
             <p>The path is misty, filled with uncertainty. Thorny bushes pave some of the way.</p>
             <p>But the journey will morph the thorns into roses and mist into sunshine.</p>
-            <p>For the explorer thrives in the unknown.</p>
+            <p>For your explorer thrives in the unknown.</p>
         `,
         rightDescription: ``,
     },

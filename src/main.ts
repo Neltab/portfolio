@@ -64,24 +64,59 @@ async function main() {
     tick();
     garden.material.uniforms.loadedTime.value = timer.getElapsed();
 
+    const hoverWhitelist = new Map<THREE.Object3D, string>([
+        [violin, "violin"],
+    ]);
+
+    const hoverLabel = document.getElementById("hover-label");
+    const raycaster = new THREE.Raycaster();
+    const mouse = new THREE.Vector2();
+    const whitelistedObjects = [...hoverWhitelist.keys()];
+
+    let currentHoveredKey: string | null = null;
+    let isShowingObjectUI = false;
+
+    function findWhitelistedMatch(hitObject: THREE.Object3D): THREE.Object3D | undefined {
+        return whitelistedObjects.find(obj => hitObject === obj || hitObject.parent === obj || obj.getObjectById(hitObject.id));
+    }
+
+    function showObjectDescription(objectKey: string) {
+        if (isShowingObjectUI && currentHoveredKey === objectKey) return;
+        isShowingObjectUI = true;
+        travelling.showObjectUI(objectKey);
+    }
+
+    function hideObjectDescription() {
+        if (!isShowingObjectUI) return;
+        isShowingObjectUI = false;
+        travelling.hideObjectUI();
+    }
+
     window.addEventListener('mousemove', (event) => {
-        // Calculate mouse position in normalized device coordinates
-        const raycaster = new THREE.Raycaster();
-        const mouse = new THREE.Vector2();
         mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
         mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
-        // Update the raycaster
         raycaster.setFromCamera(mouse, camera);
 
-        // Perform raycasting
-        const objectsToRaycast = scene.children.filter(obj => obj === violin);
-        const intersects = raycaster.intersectObjects(objectsToRaycast);
+        const intersects = raycaster.intersectObjects(whitelistedObjects, true);
 
         if (intersects.length > 0) {
-            // Handle the intersection (e.g., highlight or log the object)
-            const intersect = intersects[0];
-            intersect.object.rotation.y += 0.01;
+            const matched = findWhitelistedMatch(intersects[0].object);
+            const objectKey = matched ? hoverWhitelist.get(matched) : undefined;
+
+            if (objectKey && hoverLabel) {
+                hoverLabel.textContent = objectKey;
+                hoverLabel.style.left = `${event.clientX + 15}px`;
+                hoverLabel.style.top = `${event.clientY + 15}px`;
+                hoverLabel.classList.remove("hidden");
+
+                currentHoveredKey = objectKey;
+                showObjectDescription(objectKey);
+            }
+        } else {
+            if (hoverLabel) hoverLabel.classList.add("hidden");
+            currentHoveredKey = null;
+            hideObjectDescription();
         }
     });
 }

@@ -31,6 +31,10 @@ body {
     pointer-events: none;
 }
 
+a {
+    pointer-events: all;
+}
+
 .hud h1,
 .hud .text-container div {
     background-color: rgba(16, 16, 16, 0.5);
@@ -111,6 +115,30 @@ body {
 
 .hud .text-container div.hidden {
     transition: opacity 0s ease-in;
+}
+
+.hud.object-hover h1 {
+    transition: none;
+}
+
+.hud.object-hover .text-container div {
+    transition: none;
+}
+
+.hud.object-hover .text-container div.hidden {
+    transition: none;
+}
+
+#hover-label {
+    position: absolute;
+    background-color: rgba(16, 16, 16, 0.5);
+    color: white;
+    padding: 8px 16px;
+    font-family: 'SelfDeception';
+    font-size: 1.5rem;
+    pointer-events: none;
+    transition: opacity 200ms ease-in-out;
+    z-index: 10;
 }
 
 .hidden {
