@@ -19,6 +19,8 @@ const PLACE_NAMES: { [key: number]: string } = {
 };
 
 export function debugCurves() {
+    if (!bezierFolder) return;
+
     scene.add(axesHelper);
     controls.enabled = true;
     controls.enableDamping = true;
@@ -42,7 +44,7 @@ export function debugCurves() {
             let lookAtVisual: THREE.Group | null = null;
             const state = { visible: false };
 
-            const curveFolder = bezierFolder.addFolder(`${startName} → ${endName}`);
+            const curveFolder = bezierFolder!.addFolder(`${startName} → ${endName}`);
             curveFolder.close();
 
             const rebuild = () => {

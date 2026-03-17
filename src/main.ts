@@ -34,8 +34,9 @@ async function main() {
     scene.add(ambientLight);
     scene.add(hemisphereLight);
 
-    // Uncomment to debug curves:
-    debugCurves();
+    if (import.meta.env.DEV) {
+        debugCurves();
+    }
 
     tick();
     garden.material.uniforms.loadedTime.value = timer.getElapsed();

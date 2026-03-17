@@ -1,11 +1,14 @@
 import GUI from "lil-gui";
 
-const gui = new GUI({
-  title: "ThreeJS Starter Bun",
-});
+let bezierFolder: GUI | null = null;
 
-const bezierFolder = gui.addFolder("Bezier");
+if (import.meta.env.DEV) {
+    const gui = new GUI({
+        title: "ThreeJS Starter Bun",
+    });
+    bezierFolder = gui.addFolder("Bezier");
+}
 
 export {
-  bezierFolder,
+    bezierFolder,
 };

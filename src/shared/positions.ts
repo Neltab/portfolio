@@ -163,7 +163,7 @@ function clonePositions(positions: Positions): Positions {
     for (const start in positions) {
         result[start] = {};
         for (const end in positions[start]) {
-            result[start][end] = positions[start][end].map(v => v.clone().add(new THREE.Vector3(1, 0, 0)));
+            result[start][end] = positions[start][end].map(v => v.clone().add(new THREE.Vector3(0, 0, 0)));
         }
     }
     return result;

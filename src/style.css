@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'SelfDeception';
-  src: url('../static/fonts/SelfDeceptionRegular-ALLWA.ttf') format('truetype');
+  src: url('/fonts/SelfDeceptionRegular-ALLWA.ttf') format('truetype');
 }
 
 html {
@@ -74,14 +74,14 @@ a {
 }
 
 .hud h1::before {
-    content: url('../static/ornaments/Upper-ornament.png');
+    content: url('/ornaments/Upper-ornament.png');
     height: 50px;
     position: absolute;
     top: -33px;
 }
 
 .hud h1::after {
-    content: url('../static/ornaments/Lower-ornament.png');
+    content: url('/ornaments/Lower-ornament.png');
     height: 50px;
     position: absolute;
     bottom: -13px;
