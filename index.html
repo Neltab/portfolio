@@ -2,23 +2,37 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" type="text/css" href="./src/style.css" />
-    <link rel="stylesheet" type="text/css" href="./src/reset.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ThreeJS Starter</title>
+    <title>Aurelien Boissiere - Software Engineer Portfolio</title>
+    <meta name="description" content="Interactive 3D portfolio of Aurelien Boissiere, software engineer. Explore projects, skills, and experience through an immersive WebGL experience." />
+    <meta name="author" content="Aurelien Boissiere" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://aurelienboissiere.fr/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Aurelien Boissiere - Software Engineer Portfolio" />
+    <meta property="og:description" content="Interactive 3D portfolio of Aurelien Boissiere, software engineer. Explore projects, skills, and experience through an immersive WebGL experience." />
+    <meta property="og:url" content="https://aurelienboissiere.fr/" />
+    <meta property="og:site_name" content="Aurelien Boissiere Portfolio" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Aurelien Boissiere - Software Engineer Portfolio" />
+    <meta name="twitter:description" content="Interactive 3D portfolio. Explore projects, skills, and experience through an immersive WebGL experience." />
+
+    <link rel="stylesheet" type="text/css" href="./src/reset.css" />
+    <link rel="stylesheet" type="text/css" href="./src/style.css" />
   </head>
   <body>
     <script type="module" src="/src/main.ts"></script>
-    <div class="hud">
+    <div class="hud" role="region" aria-label="Navigation and content">
         <h1 id="title"></h1>
         <div class="text-container">
             <div id="description-left"></div>
             <div id="description-right"></div>
         </div>
-        <div id="navigation-menu"></div>
-        </div>
+        <nav id="navigation-menu" aria-label="Site navigation"></nav>
     </div>
-    <div id="hover-label" class="hidden"></div>
-    <canvas id="c"></canvas>
+    <div id="hover-label" class="hidden" aria-live="polite"></div>
+    <canvas id="c" aria-label="3D portfolio scene"></canvas>
   </body>
 </html>
