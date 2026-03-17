@@ -69,6 +69,7 @@ export function debugCurves() {
                 const pFolder = pointsFolder.addFolder(`P${index}`);
                 pFolder.close();
                 pFolder.add(point, "x", -15, 15, 0.05).onChange(rebuild);
+                pFolder.add(point, "y", -15, 15, 0.05).onChange(rebuild);
                 pFolder.add(point, "z", -15, 15, 0.05).onChange(rebuild);
             });
 
@@ -78,6 +79,7 @@ export function debugCurves() {
                 const cFolder = cpFolder.addFolder(`CP${index}`);
                 cFolder.close();
                 cFolder.add(point, "x", -15, 15, 0.05).onChange(rebuild);
+                cFolder.add(point, "y", -15, 15, 0.05).onChange(rebuild);
                 cFolder.add(point, "z", -15, 15, 0.05).onChange(rebuild);
             });
 
@@ -90,6 +92,7 @@ export function debugCurves() {
                 const pFolder = laPointsFolder.addFolder(`P${index}`);
                 pFolder.close();
                 pFolder.add(point, "x", -15, 15, 0.05).onChange(rebuild);
+                pFolder.add(point, "y", -15, 15, 0.05).onChange(rebuild);
                 pFolder.add(point, "z", -15, 15, 0.05).onChange(rebuild);
             });
 
@@ -99,6 +102,7 @@ export function debugCurves() {
                 const cFolder = laCpFolder.addFolder(`CP${index}`);
                 cFolder.close();
                 cFolder.add(point, "x", -15, 15, 0.05).onChange(rebuild);
+                cFolder.add(point, "y", -15, 15, 0.05).onChange(rebuild);
                 cFolder.add(point, "z", -15, 15, 0.05).onChange(rebuild);
             });
         }

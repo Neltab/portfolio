@@ -14,6 +14,7 @@ const loadPointCloud = (url: string, pointSize: number[] = [0.05], pointPerEdge:
 
         loader.load(url, (gltf) => {
             let index = 0;
+            console.log(gltf);
             gltf.scene.traverse((child) => {
                 if ((child as THREE.Mesh).isMesh) {
                     group.add(generateParticles(child as THREE.Mesh, pointSize[index], pointPerEdge[index]));
@@ -28,7 +29,18 @@ const loadPointCloud = (url: string, pointSize: number[] = [0.05], pointPerEdge:
 function generateParticles(mesh: THREE.Mesh, pointSize: number, pointPerEdge: number) {
     const geometry = mesh.geometry;
 
-    const texture = (mesh.material as THREE.MeshStandardMaterial).map;
+    const material = mesh.material as THREE.MeshStandardMaterial;
+    let texture = material.map;
+    if (!texture) {
+        const canvas = document.createElement('canvas');
+        canvas.width = 1;
+        canvas.height = 1;
+        const ctx = canvas.getContext('2d')!;
+        const c = material.color ?? new THREE.Color(1, 1, 1);
+        ctx.fillStyle = `rgb(${c.r * 255},${c.g * 255},${c.b * 255})`;
+        ctx.fillRect(0, 0, 1, 1);
+        texture = new THREE.CanvasTexture(canvas);
+    }
     const shaderMaterial = new THREE.ShaderMaterial({
         uniforms: {
             time: { value: 0 },

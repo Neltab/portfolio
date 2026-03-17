@@ -6,27 +6,28 @@ import garden from "./meshes/garden";
 import violin from "./meshes/violin";
 import bench from "./meshes/bench";
 import lake from "./meshes/lake";
+import iss from "./meshes/iss";
 import { ambientLight, hemisphereLight } from "./lights";
 import timer, { tick } from "./timer";
-import { BENCH_POSITION, BENCH_ROTATION, VIOLIN_POSITION, VIOLIN_ROTATION } from "./shared/positions";
+import { BENCH_POSITION, BENCH_ROTATION, VIOLIN_POSITION, VIOLIN_ROTATION, ISS_POSITION, ISS_ROTATION } from "./shared/positions";
 import travelling from "./shared/travelling";
 import { debugCurves } from "./debug/curveDebug";
 
 async function main() {
     // Meshe
     scene.add(garden);
-    console.log("garden", garden);
+
+    iss.position.set(ISS_POSITION.x, ISS_POSITION.y, ISS_POSITION.z);
+    iss.rotation.set(ISS_ROTATION.x, ISS_ROTATION.y, ISS_ROTATION.z, ISS_ROTATION.order);
+    scene.add(iss);
 
     violin.position.set(VIOLIN_POSITION.x, VIOLIN_POSITION.y, VIOLIN_POSITION.z);
     violin.rotation.set(VIOLIN_ROTATION.x, VIOLIN_ROTATION.y, VIOLIN_ROTATION.z, VIOLIN_ROTATION.order);
     scene.add(violin);
-    console.log("violin", violin);
 
     bench.position.set(BENCH_POSITION.x, BENCH_POSITION.y, BENCH_POSITION.z);
     bench.rotation.set(BENCH_ROTATION.x, BENCH_ROTATION.y, BENCH_ROTATION.z, BENCH_ROTATION.order);
     scene.add(bench);
-
-    console.log("bench", bench);
 
     scene.add(lake);
 

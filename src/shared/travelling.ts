@@ -169,10 +169,17 @@ class Travelling {
         this.uiDescriptionRight.innerHTML = en[this.currentPlace].rightDescription;
         this.uiNavigationMenu.innerHTML = "";
         for(const destination of DESTINATIONS[this.currentPlace]) {
-            const destinationElement = document.createElement("p");
-            destinationElement.innerHTML = destination.name;
-            destinationElement.onclick = () => updateLoop.push(this.travelTo(destination.position));
-            this.uiNavigationMenu?.appendChild(destinationElement);
+            const destinationContainer = document.createElement("div");
+            destinationContainer.classList.add("destination");
+            const destinationIcon = document.createElement("img");
+            destinationIcon.classList.add("icon");
+            destinationIcon.src = `/icons/${destination.icon}.png`;
+            destinationContainer.appendChild(destinationIcon);
+            const destinationText = document.createElement("p");
+            destinationText.innerHTML = destination.name;
+            destinationContainer.appendChild(destinationText);
+            destinationContainer.onclick = () => updateLoop.push(this.travelTo(destination.position));
+            this.uiNavigationMenu?.appendChild(destinationContainer);
         }
     }
 }
