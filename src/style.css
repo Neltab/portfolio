@@ -3,8 +3,14 @@
   src: url('/fonts/SelfDeceptionRegular-ALLWA.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: 'TypewriterInked';
+  src: url('/fonts/TypewriterInkedRegular-lgwPZ.ttf') format('truetype');
+}
+
 html {
     background-color: black;
+    font-family: 'TypewriterInked';
 }
 
 #c {
@@ -50,7 +56,8 @@ a {
 }
 
 .hud .text-container div {
-    width: 350px;
+    min-width: 350px;
+    width: 20vw;
     transition: opacity 0ms ease-in 1s;
 }
 

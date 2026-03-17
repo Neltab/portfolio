@@ -13,11 +13,9 @@ const loadPointCloud = (url: string, pointSize: number[] = [0.05], pointPerEdge:
         loader.setDRACOLoader( draco );
 
         loader.load(url, (gltf) => {
-            console.log(url, gltf.scene);
             let index = 0;
             gltf.scene.traverse((child) => {
                 if ((child as THREE.Mesh).isMesh) {
-                    console.log("mesh", child);
                     group.add(generateParticles(child as THREE.Mesh, pointSize[index], pointPerEdge[index]));
                     index++;
                 }

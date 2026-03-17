@@ -16,8 +16,6 @@ const lake = new Mesh(
     new MeshBasicMaterial({ side: DoubleSide, map: texture })
 );
 
-console.log("lake", lake);
-
 const pointLake = generateParticles(lake, 0.1, 20);
 pointLake.position.set(-0.75, 0.35, 1.5);
 pointLake.rotateX(Math.PI / 2);
