@@ -54,6 +54,10 @@ class Travelling {
         const time = elapsedTime - startTime;
         if (time > duration) {
             this.isTravelling = false;
+            const finalPos = curve.getPointAt(1);
+            const finalLook = lookAtCurve.getPointAt(0.99);
+            camera.position.set(finalPos.x, finalPos.y, finalPos.z);
+            camera.lookAt(finalLook);
             this.updateUI();
             this.showUI();
             update.remove();
