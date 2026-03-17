@@ -7,8 +7,8 @@ import violin from "./meshes/violin";
 import bench from "./meshes/bench";
 import lake from "./meshes/lake";
 import { ambientLight, hemisphereLight } from "./lights";
-import timer, { tick, updateLoop } from "./timer";
-import { PLACES, BENCH_POSITION, BENCH_ROTATION, VIOLIN_POSITION, VIOLIN_ROTATION } from "./shared/positions";
+import timer, { tick } from "./timer";
+import { BENCH_POSITION, BENCH_ROTATION, VIOLIN_POSITION, VIOLIN_ROTATION } from "./shared/positions";
 import travelling from "./shared/travelling";
 import { debugCurves } from "./debug/curveDebug";
 

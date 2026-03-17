@@ -1,9 +1,10 @@
+import * as THREE from "three";
 import { loadPointCloud } from "../utils/pointCloud";
 import { updateLoop } from "../timer";
 import { MathUtils } from "three/src/math/MathUtils.js";
 
 const gardenGroup = await loadPointCloud('/static/models/garden4-2.glb', [0.075], [4]);
-const garden = gardenGroup.children[0];
+const garden = gardenGroup.children[0] as THREE.Points<THREE.BufferGeometry, THREE.ShaderMaterial>;
 garden.rotateX(MathUtils.degToRad(90));
 garden.rotateZ(MathUtils.degToRad(25));
 

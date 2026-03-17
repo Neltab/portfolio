@@ -6,7 +6,7 @@ import { CurrentUpdate } from "../helpers/updateLoop";
 import BezierCurve from "./bezierCurve";
 import { CONTROL_POINTS, CONTROL_POINTS_LOOKAT, DESTINATIONS, TRAVELLING_LOOKAT } from "../shared/positions";
 import en, { OBJECTS as EN_OBJECTS } from "../texts/en";
-import fr, { OBJECTS as FR_OBJECTS } from "../texts/fr";
+// import fr from "../texts/fr";
 
 type Curves = {
     [start: number]: {

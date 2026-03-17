@@ -4,7 +4,7 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 import { vertexShader, fragmentShader } from "../shared/shaders";
 
 const loadPointCloud = (url: string, pointSize: number[] = [0.05], pointPerEdge: number[] = [4]) => {
-    return new Promise<THREE.Group>((resolve, reject) => {
+    return new Promise<THREE.Group>((resolve, _reject) => {
         const group = new THREE.Group();
         const loader = new GLTFLoader();
         const draco = new DRACOLoader();
@@ -16,7 +16,7 @@ const loadPointCloud = (url: string, pointSize: number[] = [0.05], pointPerEdge:
             console.log(url, gltf.scene);
             let index = 0;
             gltf.scene.traverse((child) => {
-                if (child.isMesh) {
+                if ((child as THREE.Mesh).isMesh) {
                     console.log("mesh", child);
                     group.add(generateParticles(child as THREE.Mesh, pointSize[index], pointPerEdge[index]));
                     index++;
@@ -30,7 +30,7 @@ const loadPointCloud = (url: string, pointSize: number[] = [0.05], pointPerEdge:
 function generateParticles(mesh: THREE.Mesh, pointSize: number, pointPerEdge: number) {
     const geometry = mesh.geometry;
 
-    const texture = mesh.material.map;
+    const texture = (mesh.material as THREE.MeshStandardMaterial).map;
     const shaderMaterial = new THREE.ShaderMaterial({
         uniforms: {
             time: { value: 0 },
@@ -70,9 +70,9 @@ function generateParticles(mesh: THREE.Mesh, pointSize: number, pointPerEdge: nu
 }
 
 function generatePointsForTriangle(
-    ax, ay, az, bx, by, bz, cx, cy, cz,  // Positions
-    au, av, bu, bv, cu, cv,              // UVs
-    n, pointNumber, uvNumber                                 // Number of points per edge
+    ax: number, ay: number, az: number, bx: number, by: number, bz: number, cx: number, cy: number, cz: number,
+    au: number, av: number, bu: number, bv: number, cu: number, cv: number,
+    n: number, pointNumber: number, uvNumber: number
 ) {
     const points = new Array(pointNumber);
     const uvs = new Array(uvNumber);
@@ -103,7 +103,7 @@ function generatePointsForTriangle(
     return { points, uvs };
 }
 
-function generatePointsForAllTrianglesIndexed(geometry, n) {
+function generatePointsForAllTrianglesIndexed(geometry: THREE.BufferGeometry, n: number) {
     // Get the index and position attributes
     const index = geometry.index;
     const positionAttribute = geometry.attributes.position;
@@ -169,7 +169,7 @@ function generatePointsForAllTrianglesIndexed(geometry, n) {
     return { allPoints, allUvs };
 }
 
-function getTotalIterations(n) {
+function getTotalIterations(n: number) {
     return (n-1) * (n - 2) / 2;
 }
 
