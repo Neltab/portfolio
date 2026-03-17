@@ -53,6 +53,7 @@ export function debugCurves() {
                 if (!state.visible) { curveVisual = null; lookAtVisual = null; return; }
                 curveVisual = curve.getCurveVisual(0x00ff00);
                 lookAtVisual = lookAtCurve.getCurveVisual(0x4444ff);
+                if (!curveVisual || !lookAtVisual) return;
                 scene.add(curveVisual);
                 scene.add(lookAtVisual);
             };
