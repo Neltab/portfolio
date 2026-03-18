@@ -59,6 +59,8 @@ export default {
             <p>Ce site est en cours de développement, je travaille activement dessus, vous pouvez vous attendre à quelques bugs et textures manquantes.</p>
             <p>⠀</p>
             <p>You can find the english version <a href="/en" class="house">here</a>.</p>
+            <p>⠀</p>
+            <p>Vous pouvez retrouver le code source de ce site <a href="https://github.com/Neltab/portfolio" target="_blank" class="house">ici</a>.</p>
         `,
     },
     [PLACES.BENCH]: {
