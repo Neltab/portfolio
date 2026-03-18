@@ -119,7 +119,13 @@ a {
 .hud .icon {
     display: block;
     width: 50px;
-    filter: invert(1);
+    height: 50px;
+    mask-size: contain;
+    mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
 }
 
 .hud h1.hidden {
@@ -140,6 +146,22 @@ a {
 
 .hud.object-hover .text-container div.hidden {
     transition: none;
+}
+
+.house {
+    color: #B07A7A;
+}
+
+.lake {
+    color: #559A9A;
+}
+
+.path {
+    color: #6B8F5E;
+}
+
+.bench {
+    color: #D4A04A;
 }
 
 #hover-label {

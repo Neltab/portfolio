@@ -17,15 +17,16 @@ export type Destination = {
     name: string,
     position: number,
     icon: string,
+    color: string,
 }
 
-const BENCH_DESTINATION: Destination = { name: "Bench", position: PLACES.BENCH, icon: "bench" };
-const PATH_DESTINATION: Destination = { name: "Path", position: PLACES.PATH, icon: "path" };
-const HOUSE_DESTINATION: Destination = { name: "House", position: PLACES.HOUSE, icon: "house" };
-const LAKE_ENTRANCE_DESTINATION: Destination = { name: "Lake", position: PLACES.LAKE.ENTRANCE, icon: "lake" };
-const LAKE_BENCH_DESTINATION: Destination = { name: "Lake", position: PLACES.LAKE.BENCH, icon: "lake" };
-const LAKE_PATH_DESTINATION: Destination = { name: "Lake", position: PLACES.LAKE.PATH, icon: "lake" };
-const LAKE_HOUSE_DESTINATION: Destination = { name: "Lake", position: PLACES.LAKE.HOUSE, icon: "lake" };
+const BENCH_DESTINATION: Destination = { name: "Bench", position: PLACES.BENCH, icon: "bench", color: "#D4A04A" };
+const PATH_DESTINATION: Destination = { name: "Path", position: PLACES.PATH, icon: "path", color: "#6B8F5E" };
+const HOUSE_DESTINATION: Destination = { name: "House", position: PLACES.HOUSE, icon: "house", color: "#B07A7A" };
+const LAKE_ENTRANCE_DESTINATION: Destination = { name: "Lake", position: PLACES.LAKE.ENTRANCE, icon: "lake", color: "#559A9A" };
+const LAKE_BENCH_DESTINATION: Destination = { name: "Lake", position: PLACES.LAKE.BENCH, icon: "lake", color: "#559A9A" };
+const LAKE_PATH_DESTINATION: Destination = { name: "Lake", position: PLACES.LAKE.PATH, icon: "lake", color: "#559A9A" };
+const LAKE_HOUSE_DESTINATION: Destination = { name: "Lake", position: PLACES.LAKE.HOUSE, icon: "lake", color: "#559A9A" };
 
 export type Destinations = {
     [start: number]: Destination[]

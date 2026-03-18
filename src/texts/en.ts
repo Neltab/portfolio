@@ -26,7 +26,7 @@ export const OBJECTS: { [key: string]: { title: string, leftDescription: string,
             <p>Space is to me the pinnacle of exploration.</p>
             <p>Hostile yet peaceful, empty yet filled with wonders, pristine and untouchable.</p>
             <p>Its mysteries unfold to the unknowing eye on Earth, some lenses away to reveal its true beauty.</p>
-            <p>And despite all the desire we can only relax in the grass and observe its colorful starry dome</p>
+            <p>And despite all the desire to explore it, we can only relax in the grass and observe its colorful starry dome</p>
         `,
         rightDescription: ``,
     }
@@ -37,10 +37,10 @@ export default {
         title: "The Entrance",
         leftDescription: `
             <p>Welcome to my humble garden, were you can learn more about a young developper as you wander aroung.</p>
-            <p>Have a sit on the bench and discover my hobbies,</p>
-            <p>Follow the path across the river and heading to my future,</p>
-            <p>Take a tour in the house and through an exposition of my projects,</p>
-            <p>Or dive into your reflection in the lake and into my past experiences.</p>
+            <p>Have a sit on <span class="bench">the Bench</span> and discover my hobbies,</p>
+            <p>Follow <span class="path">the Path</span> across the river and heading to my future,</p>
+            <p>Take a tour in <span class="house">the House</span> and through an exposition of my projects,</p>
+            <p>Or dive into your reflection in <span class="lake">the Lake</span> and into my past experiences.</p>
         `,
         rightDescription: `
             <p>This website is a work in progress, I'm still working on it so expect a few bugs and some missing textures.</p>
@@ -66,7 +66,7 @@ export default {
         leftDescription: ``,
         rightDescription: `            
             <p>The museum is still in renovation.</p>
-            <p>Past projects can be found in the imaginary place that is <a href="https://github.com/Neltab">GitHub</a>.</p>
+            <p>Past projects can be found in the <a href="https://archive.aurelienboissiere.fr class="house">Archive </a> or directly on <a href="https://github.com/Neltab" class="house">GitHub</a>.</p>
         `,
     },
     [PLACES.LAKE.ENTRANCE]: LAKE_TRANSLATIONS,

@@ -171,11 +171,14 @@ class Travelling {
         for(const destination of DESTINATIONS[this.currentPlace]) {
             const destinationContainer = document.createElement("div");
             destinationContainer.classList.add("destination");
-            const destinationIcon = document.createElement("img");
+            const destinationIcon = document.createElement("div");
             destinationIcon.classList.add("icon");
-            destinationIcon.src = `/icons/${destination.icon}.png`;
+            destinationIcon.style.maskImage = `url(/icons/${destination.icon}.png)`;
+            destinationIcon.style.webkitMaskImage = `url(/icons/${destination.icon}.png)`;
+            destinationIcon.style.backgroundColor = destination.color;
             destinationContainer.appendChild(destinationIcon);
             const destinationText = document.createElement("p");
+            destinationText.classList.add(destination.name.toLowerCase());
             destinationText.innerHTML = destination.name;
             destinationContainer.appendChild(destinationText);
             destinationContainer.onclick = () => updateLoop.push(this.travelTo(destination.position));
