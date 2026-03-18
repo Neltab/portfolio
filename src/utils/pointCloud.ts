@@ -14,7 +14,6 @@ const loadPointCloud = (url: string, pointSize: number[] = [0.05], pointPerEdge:
 
         loader.load(url, (gltf) => {
             let index = 0;
-            console.log(gltf);
             gltf.scene.traverse((child) => {
                 if ((child as THREE.Mesh).isMesh) {
                     group.add(generateParticles(child as THREE.Mesh, pointSize[index], pointPerEdge[index]));

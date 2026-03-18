@@ -66,7 +66,7 @@ export default {
         leftDescription: ``,
         rightDescription: `            
             <p>The museum is still in renovation.</p>
-            <p>Past projects can be found in the <a href="https://archive.aurelienboissiere.fr class="house">Archive </a> or directly on <a href="https://github.com/Neltab" class="house">GitHub</a>.</p>
+            <p>Past projects can be found in the <a href="https://archive.aurelienboissiere.fr" target=”_blank” class="house">Archive</a> or directly on <a href="https://github.com/Neltab" target=”_blank” class="house">GitHub</a>.</p>
         `,
     },
     [PLACES.LAKE.ENTRANCE]: LAKE_TRANSLATIONS,
