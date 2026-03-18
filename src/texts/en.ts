@@ -3,11 +3,17 @@ import { PLACES } from "../shared/positions";
 const LAKE_TRANSLATIONS = {
     title: "The Lake",
     leftDescription: `
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <p>Here lies my past experiences.</p>
+        <h4>Kiliogene.</h4>
+        <p>Salesforce developer, making custom UI components to fill the precise needs of our clients.</p>
+        <p>I was tasked with connecting multiple of their systems and external processes to Salesforce through custom APEX code.</p>
+        <p>I also provided consulting services to help them improve their workflows and processes, such as introducing a custom CI/CD pipeline or providing gold standard design practices to improve code quality.</p>
     `,
-    rightDescription: ``,
+    rightDescription: `
+        <h4>Galadrim.</h4>
+        <p>I was a full stack web and mobile developer, working directly with the clients to build their websites and applications.</p>
+        <p>I would architecture, develop, test and deploy their projects with great care, communicating with them regularly to ensure we were on the right track.</p>
+    `,
 };
 
 export const OBJECTS: { [key: string]: { title: string, leftDescription: string, rightDescription: string } } = {
@@ -37,10 +43,10 @@ export default {
         title: "The Entrance",
         leftDescription: `
             <p>Welcome to my humble garden, were you can learn more about a young developper as you wander aroung.</p>
-            <p>Have a sit on <span class="bench">the Bench</span> and discover my hobbies,</p>
-            <p>Follow <span class="path">the Path</span> across the river and heading to my future,</p>
             <p>Take a tour in <span class="house">the House</span> and through an exposition of my projects,</p>
-            <p>Or dive into your reflection in <span class="lake">the Lake</span> and into my past experiences.</p>
+            <p>Dive into your reflection in <span class="lake">the Lake</span> and into my past experiences.</p>
+            <p>Have a sit on <span class="bench">the Bench</span> and discover my hobbies,</p>
+            <p>Or follow <span class="path">the Path</span> across the river and heading to my future,</p>   
         `,
         rightDescription: `
             <p>This website is a work in progress, I'm still working on it so expect a few bugs and some missing textures.</p>

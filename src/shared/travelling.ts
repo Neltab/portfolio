@@ -6,7 +6,11 @@ import { CurrentUpdate } from "../helpers/updateLoop";
 import BezierCurve from "./bezierCurve";
 import { CONTROL_POINTS, CONTROL_POINTS_LOOKAT, DESTINATIONS, TRAVELLING_LOOKAT } from "../shared/positions";
 import en, { OBJECTS as EN_OBJECTS } from "../texts/en";
-// import fr from "../texts/fr";
+import fr, { OBJECTS as FR_OBJECTS } from "../texts/fr";
+
+const isEnglish = window.location.pathname.startsWith("/en");
+const texts = isEnglish ? en : fr;
+const objects = isEnglish ? EN_OBJECTS : FR_OBJECTS;
 
 type Curves = {
     [start: number]: {
@@ -115,7 +119,7 @@ class Travelling {
         if (!this.uiTitle || !this.uiDescriptionLeft || !this.uiDescriptionRight || !this.uiNavigationMenu) {
             return;
         }
-        const objectTexts = EN_OBJECTS[objectKey];
+        const objectTexts = objects[objectKey];
         if (!objectTexts) return;
 
         if (!this.savedUIState) {
@@ -164,9 +168,9 @@ class Travelling {
         if (!this.uiTitle || !this.uiDescriptionLeft || !this.uiDescriptionRight || !this.uiNavigationMenu) {
             return;
         }
-        this.uiTitle.innerHTML = en[this.currentPlace].title;
-        this.uiDescriptionLeft.innerHTML = en[this.currentPlace].leftDescription;
-        this.uiDescriptionRight.innerHTML = en[this.currentPlace].rightDescription;
+        this.uiTitle.innerHTML = texts[this.currentPlace].title;
+        this.uiDescriptionLeft.innerHTML = texts[this.currentPlace].leftDescription;
+        this.uiDescriptionRight.innerHTML = texts[this.currentPlace].rightDescription;
         this.uiNavigationMenu.innerHTML = "";
         for(const destination of DESTINATIONS[this.currentPlace]) {
             const destinationContainer = document.createElement("div");
