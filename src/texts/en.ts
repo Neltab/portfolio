@@ -38,6 +38,13 @@ export const OBJECTS: { [key: string]: { title: string, leftDescription: string,
     }
 };
 
+export const DESTINATION_NAMES: { [key: string]: string } = {
+    bench: "Bench",
+    path: "Path",
+    house: "House",
+    lake: "Lake",
+};
+
 export default {
     [PLACES.ENTRANCE]: {
         title: "The Entrance",
@@ -50,6 +57,8 @@ export default {
         `,
         rightDescription: `
             <p>This website is a work in progress, I'm still working on it so expect a few bugs and some missing textures.</p>
+            <p>⠀</p>
+            <p>Vous pouvez retrouver la version française <a href="/" class="house">ici</a>.</p>
         `,
     },
     [PLACES.BENCH]: {

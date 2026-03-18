@@ -5,12 +5,13 @@ import camera from "../camera";
 import { CurrentUpdate } from "../helpers/updateLoop";
 import BezierCurve from "./bezierCurve";
 import { CONTROL_POINTS, CONTROL_POINTS_LOOKAT, DESTINATIONS, TRAVELLING_LOOKAT } from "../shared/positions";
-import en, { OBJECTS as EN_OBJECTS } from "../texts/en";
-import fr, { OBJECTS as FR_OBJECTS } from "../texts/fr";
+import en, { OBJECTS as EN_OBJECTS, DESTINATION_NAMES as EN_NAMES } from "../texts/en";
+import fr, { OBJECTS as FR_OBJECTS, DESTINATION_NAMES as FR_NAMES } from "../texts/fr";
 
 const isEnglish = window.location.pathname.startsWith("/en");
 const texts = isEnglish ? en : fr;
 const objects = isEnglish ? EN_OBJECTS : FR_OBJECTS;
+const destinationNames = isEnglish ? EN_NAMES : FR_NAMES;
 
 type Curves = {
     [start: number]: {
@@ -183,7 +184,7 @@ class Travelling {
             destinationContainer.appendChild(destinationIcon);
             const destinationText = document.createElement("p");
             destinationText.classList.add(destination.name.toLowerCase());
-            destinationText.innerHTML = destination.name;
+            destinationText.innerHTML = destinationNames[destination.icon] || destination.name;
             destinationContainer.appendChild(destinationText);
             destinationContainer.onclick = () => updateLoop.push(this.travelTo(destination.position));
             this.uiNavigationMenu?.appendChild(destinationContainer);
