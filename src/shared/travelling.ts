@@ -8,6 +8,8 @@ import { CONTROL_POINTS, CONTROL_POINTS_LOOKAT, DESTINATIONS, TRAVELLING_LOOKAT 
 import en, { OBJECTS as EN_OBJECTS, DESTINATION_NAMES as EN_NAMES } from "../texts/en";
 import fr, { OBJECTS as FR_OBJECTS, DESTINATION_NAMES as FR_NAMES } from "../texts/fr";
 
+const SPAN_CLASSES = ["bench", "path", "house", "lake"];
+
 const isEnglish = window.location.pathname.startsWith("/en");
 const texts = isEnglish ? en : fr;
 const objects = isEnglish ? EN_OBJECTS : FR_OBJECTS;
@@ -165,6 +167,22 @@ class Travelling {
         if (!hiddenElements.includes("nav")) this.uiNavigationMenu.classList.remove("hidden");
     }
 
+    bindSpanClickHandlers() {
+        const containers = [this.uiDescriptionLeft, this.uiDescriptionRight];
+        for (const container of containers) {
+            if (!container) continue;
+            for (const className of SPAN_CLASSES) {
+                const spans = container.querySelectorAll(`span.${className}`);
+                const destination = DESTINATIONS[this.currentPlace].find(d => d.icon === className);
+                if (!destination) continue;
+                spans.forEach(span => {
+                    (span as HTMLElement).style.cursor = "pointer";
+                    (span as HTMLElement).onclick = () => updateLoop.push(this.travelTo(destination.position));
+                });
+            }
+        }
+    }
+
     updateUI() {
         if (!this.uiTitle || !this.uiDescriptionLeft || !this.uiDescriptionRight || !this.uiNavigationMenu) {
             return;
@@ -172,6 +190,7 @@ class Travelling {
         this.uiTitle.innerHTML = texts[this.currentPlace].title;
         this.uiDescriptionLeft.innerHTML = texts[this.currentPlace].leftDescription;
         this.uiDescriptionRight.innerHTML = texts[this.currentPlace].rightDescription;
+        this.bindSpanClickHandlers();
         this.uiNavigationMenu.innerHTML = "";
         for(const destination of DESTINATIONS[this.currentPlace]) {
             const destinationContainer = document.createElement("div");
