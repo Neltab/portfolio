@@ -50,7 +50,7 @@ export default {
         title: "L'Entrée",
         leftDescription: `
             <p>Bienvenue dans mon humble jardin, où vous pouvez en apprendre davantage sur un jeune développeur au détour d'une promenade.</p>
-            <p>Faites un tour dans à <span class="house">la Maison</span> et à travers une exposition de mes projets,</p>
+            <p>Faites un tour à <span class="house">la Maison</span> et à travers une exposition de mes projets,</p>
             <p>Plongez dans votre reflet au <span class="lake">Lac</span> et dans mes expériences passées.</p>
             <p>Asseyez-vous sur <span class="bench">le Banc</span> et découvrez mes loisirs,</p>
             <p>Ou suivez <span class="path">le Chemin</span> à travers la rivière en direction de mon avenir.</p>
