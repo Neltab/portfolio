@@ -13,13 +13,23 @@ const LAKE_TRANSLATIONS = {
 export const OBJECTS: { [key: string]: { title: string, leftDescription: string, rightDescription: string } } = {
     violin: {
         title: "The Violin",
-        leftDescription: `
+        leftDescription: ``,
+        rightDescription: `            
             <p>The violin was always a dream instrument for me.</p>
             <p>I played the piano when I was younger, but it lacked the freedom violins would give.</p>
             <p>I finally tried it for the first time in early september of 2025 and kept playing it daily since.</p>
         `,
-        rightDescription: ``,
     },
+    iss: {
+        title: "The Outer Wilds",
+        leftDescription: `
+            <p>Space is to me the pinnacle of exploration.</p>
+            <p>Hostile yet peaceful, empty yet filled with wonders, pristine and untouchable.</p>
+            <p>Its mysteries unfold to the unknowing eye on Earth, some lenses away to reveal its true beauty.</p>
+            <p>And despite all the desire we can only relax in the grass and observe its colorful starry dome</p>
+        `,
+        rightDescription: ``,
+    }
 };
 
 export default {

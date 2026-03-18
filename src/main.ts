@@ -44,6 +44,7 @@ async function main() {
 
     const hoverWhitelist = new Map<THREE.Object3D, string>([
         [violin, "violin"],
+        [iss, "iss"],
     ]);
 
     const hoverLabel = document.getElementById("hover-label");
