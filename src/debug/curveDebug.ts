@@ -11,11 +11,11 @@ const PLACE_NAMES: { [key: number]: string } = {
     [PLACES.ENTRANCE]: "Entrance",
     [PLACES.BENCH]: "Bench",
     [PLACES.PATH]: "Path",
-    [PLACES.HOUSE]: "House",
+    [PLACES.MUSEUM]: "Museum",
     [PLACES.LAKE.ENTRANCE]: "Lake.Entrance",
     [PLACES.LAKE.BENCH]: "Lake.Bench",
     [PLACES.LAKE.PATH]: "Lake.Path",
-    [PLACES.LAKE.HOUSE]: "Lake.House",
+    [PLACES.LAKE.MUSEUM]: "Lake.Museum",
 };
 
 export function debugCurves() {

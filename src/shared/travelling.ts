@@ -8,7 +8,7 @@ import { CONTROL_POINTS, CONTROL_POINTS_LOOKAT, DESTINATIONS, TRAVELLING_LOOKAT 
 import en, { OBJECTS as EN_OBJECTS, DESTINATION_NAMES as EN_NAMES } from "../texts/en";
 import fr, { OBJECTS as FR_OBJECTS, DESTINATION_NAMES as FR_NAMES } from "../texts/fr";
 
-const SPAN_CLASSES = ["bench", "path", "house", "lake"];
+const SPAN_CLASSES = ["bench", "path", "museum", "lake"];
 
 const isEnglish = window.location.pathname.startsWith("/en");
 const texts = isEnglish ? en : fr;

@@ -43,8 +43,8 @@ async function main() {
     garden.material.uniforms.loadedTime.value = timer.getElapsed();
 
     const hoverWhitelist = new Map<THREE.Object3D, string>([
-        [violin, "violin"],
-        [iss, "iss"],
+        [violin, "Violin"],
+        [iss, "Space Station"],
     ]);
 
     const hoverLabel = document.getElementById("hover-label");
@@ -84,11 +84,6 @@ async function main() {
             const objectKey = matched ? hoverWhitelist.get(matched) : undefined;
 
             if (objectKey && hoverLabel) {
-                hoverLabel.textContent = objectKey;
-                hoverLabel.style.left = `${event.clientX + 15}px`;
-                hoverLabel.style.top = `${event.clientY + 15}px`;
-                hoverLabel.classList.remove("hidden");
-
                 currentHoveredKey = objectKey;
                 showObjectDescription(objectKey);
             }

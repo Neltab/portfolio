@@ -16,8 +16,9 @@ const LAKE_TRANSLATIONS = {
     `,
 };
 
+// TODO : use consts from keys
 export const OBJECTS: { [key: string]: { title: string, leftDescription: string, rightDescription: string } } = {
-    violin: {
+    Violin: {
         title: "Le Violon",
         leftDescription: ``,
         rightDescription: `
@@ -26,7 +27,7 @@ export const OBJECTS: { [key: string]: { title: string, leftDescription: string,
             <p>J'ai finalement essayé pour la première fois début septembre 2025 et j'en joue quotidiennement depuis.</p>
         `,
     },
-    iss: {
+    "Space Station": {
         title: "Les Contrées Sauvages",
         leftDescription: `
             <p>L'espace est pour moi le sommet de l'exploration.</p>
@@ -41,7 +42,7 @@ export const OBJECTS: { [key: string]: { title: string, leftDescription: string,
 export const DESTINATION_NAMES: { [key: string]: string } = {
     bench: "Banc",
     path: "Chemin",
-    house: "Maison",
+    museum: "Musée",
     lake: "Lac",
 };
 
@@ -50,17 +51,17 @@ export default {
         title: "L'Entrée",
         leftDescription: `
             <p>Bienvenue dans mon humble jardin, où vous pouvez en apprendre davantage sur un jeune développeur au détour d'une promenade.</p>
-            <p>Faites un tour à <span class="house">la Maison</span> et à travers une exposition de mes projets,</p>
+            <p>Faites un tour au <span class="museum">Musée</span> et à travers une exposition de mes projets,</p>
             <p>Plongez dans votre reflet au <span class="lake">Lac</span> et dans mes expériences passées.</p>
-            <p>Asseyez-vous sur <span class="bench">le Banc</span> et découvrez mes loisirs,</p>
-            <p>Ou suivez <span class="path">le Chemin</span> à travers la rivière en direction de mon avenir.</p>
+            <p>Asseyez-vous sur le <span class="bench">Banc</span> et découvrez mes loisirs,</p>
+            <p>Ou suivez le <span class="path">Chemin</span> à travers la rivière en direction de mon avenir.</p>
         `,
         rightDescription: `
             <p>Ce site est en cours de développement, je travaille activement dessus, vous pouvez vous attendre à quelques bugs et textures manquantes.</p>
             <p>⠀</p>
-            <p>You can find the english version <a href="/en" class="house">here</a>.</p>
+            <p>You can find the english version <a href="/en" class="museum">here</a>.</p>
             <p>⠀</p>
-            <p>Vous pouvez retrouver le code source de ce site <a href="https://github.com/Neltab/portfolio" target="_blank" class="house">ici</a>.</p>
+            <p>Vous pouvez retrouver le code source de ce site <a href="https://github.com/Neltab/portfolio" target="_blank" class="museum">ici</a>.</p>
         `,
     },
     [PLACES.BENCH]: {
@@ -78,16 +79,16 @@ export default {
         `,
         rightDescription: ``,
     },
-    [PLACES.HOUSE]: {
+    [PLACES.MUSEUM]: {
         title: "Le Musée",
         leftDescription: ``,
         rightDescription: `
             <p>Le musée est encore en rénovation.</p>
-            <p>Les projets passés se trouvent aux <a href="https://archive.aurelienboissiere.fr" target="_blank" class="house">Archives</a> ou directement sur <a href="https://github.com/Neltab" target="_blank" class="house">GitHub</a>.</p>
+            <p>Les projets passés se trouvent aux <a href="https://archive.aurelienboissiere.fr" target="_blank" class="museum">Archives</a> ou directement sur <a href="https://github.com/Neltab" target="_blank" class="museum">GitHub</a>.</p>
         `,
     },
     [PLACES.LAKE.ENTRANCE]: LAKE_TRANSLATIONS,
     [PLACES.LAKE.BENCH]: LAKE_TRANSLATIONS,
     [PLACES.LAKE.PATH]: LAKE_TRANSLATIONS,
-    [PLACES.LAKE.HOUSE]: LAKE_TRANSLATIONS,
+    [PLACES.LAKE.MUSEUM]: LAKE_TRANSLATIONS,
 };
