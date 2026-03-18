@@ -44,14 +44,18 @@ class Travelling {
         this.updateUI();
     }
 
-    travelTo(place: number, duration: number = 7.5) {
+    travelTo(place: number) {
         if(!this.isTravelling && (!this.curves[this.currentPlace] || !this.curves[this.currentPlace][place])) return () => {};
+        const baseDuration = 5;
+        const referenceLength = 11; // Rough estimate of the average length of the curves
+
         const curve = this.curves[this.currentPlace][place];
         const lookAtCurve = this.lookAtCurves[this.currentPlace][place];
         this.isTravelling = true;
         this.savedUIState = null;
         this.uiTitle?.closest(".hud")?.classList.remove("object-hover");
         this.hideUI();
+        const duration = baseDuration * Math.sqrt(curve.length / referenceLength);
         const travelFunction = this.travelAlongCurve(curve, lookAtCurve, timer.getElapsed(), duration);
         this.currentPlace = place;
         return travelFunction;
