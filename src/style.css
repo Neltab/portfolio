@@ -130,6 +130,12 @@ a {
     cursor: pointer;
 }
 
+.hud .hidden .destination, 
+.hud .hidden .destination p {
+    pointer-events: none;
+    cursor: none;
+}
+
 .hud .icon {
     display: block;
     flex-shrink: 0;
