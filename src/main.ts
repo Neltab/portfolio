@@ -8,7 +8,7 @@ import lake from "./scene/meshes/lake";
 import iss from "./scene/meshes/iss";
 import { ambientLight, hemisphereLight } from "./scene/lights";
 import timer, { tick } from "./engine/timer";
-import { BENCH_POSITION, BENCH_ROTATION, VIOLIN_POSITION, VIOLIN_ROTATION, ISS_POSITION, ISS_ROTATION } from "./navigation/positions";
+import { PLACES, BENCH_POSITION, BENCH_ROTATION, VIOLIN_POSITION, VIOLIN_ROTATION, ISS_POSITION, ISS_ROTATION } from "./navigation/positions";
 import { debugCurves } from "./debug/curveDebug";
 import initHover from "./ui/hover";
 import initHud from "./ui/hud";
@@ -43,12 +43,14 @@ async function main() {
     garden.material.uniforms.loadedTime.value = timer.getElapsed();
 
     // UI
-    const hoverWhitelist = new Map<THREE.Object3D, string>([
-        [violin, "Violin"],
-        [iss, "Space Station"],
+    const hoverWhitelists = new Map([
+        [PLACES.BENCH, new Map<THREE.Object3D, string>([
+            [violin, "Violin"],
+            [iss, "Space Station"],
+        ])],
     ]);
 
-    initHover(hoverWhitelist);
+    initHover(hoverWhitelists);
     initHud();
 }
 
