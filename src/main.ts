@@ -1,11 +1,11 @@
 
 import scene from "./scene/scene";
 import * as THREE from "three";
-import garden from "./scene/meshes/garden";
-import violin from "./scene/meshes/violin";
-import bench from "./scene/meshes/bench";
+import loadGarden from "./scene/meshes/garden";
+import loadViolin from "./scene/meshes/violin";
+import loadBench from "./scene/meshes/bench";
 import lake from "./scene/meshes/lake";
-import iss from "./scene/meshes/iss";
+import loadIss from "./scene/meshes/iss";
 import { ambientLight, hemisphereLight } from "./scene/lights";
 import timer, { tick } from "./engine/timer";
 import { PLACES, BENCH_POSITION, BENCH_ROTATION, VIOLIN_POSITION, VIOLIN_ROTATION, ISS_POSITION, ISS_ROTATION } from "./navigation/positions";
@@ -14,6 +14,14 @@ import initHover from "./ui/hover";
 import initHud from "./ui/hud";
 
 async function main() {
+    // Load meshes in parallel
+    const [garden, violin, bench, iss] = await Promise.all([
+        loadGarden(),
+        loadViolin(),
+        loadBench(),
+        loadIss(),
+    ]);
+
     // Meshes
     scene.add(garden);
 
