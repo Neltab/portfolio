@@ -49,7 +49,7 @@ export default {
     [PLACES.ENTRANCE]: {
         title: "The Entrance",
         leftDescription: `
-            <p>Welcome to my humble garden, were you can learn more about a young developper as you wander aroung.</p>
+            <p>Welcome to my humble garden, were you can learn more about a young developper as you wander around.</p>
             <p>Take a tour in the <span class="museum">Museum</span> and through an exposition of my projects,</p>
             <p>Dive into your reflection in the <span class="lake">Lake</span> and into my past experiences.</p>
             <p>Have a sit on the <span class="bench">Bench</span> and discover my hobbies,</p>
