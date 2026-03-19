@@ -209,3 +209,32 @@ a {
     opacity: 0;
     pointer-events: none;
 }
+
+#loading-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    z-index: 100;
+    transition: opacity 1s ease-out;
+}
+
+#loading-screen h1 {
+    font-family: 'SelfDeception';
+    font-size: 4rem;
+    font-weight: 200;
+    color: white;
+    margin-bottom: 1rem;
+}
+
+#loading-screen .loading-text {
+    font-family: 'TypewriterInked';
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.6);
+}

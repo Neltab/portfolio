@@ -60,6 +60,16 @@ async function main() {
 
     initHover(hoverWhitelists);
     initHud();
+
+    // Hide loading screen, show HUD
+    const loadingScreen = document.getElementById("loading-screen")!;
+    const hud = document.querySelector<HTMLElement>(".hud")!;
+
+    loadingScreen.style.opacity = "0";
+    loadingScreen.addEventListener("transitionend", () => {
+        loadingScreen.remove();
+    });
+    hud.classList.remove("hidden");
 }
 
 main();

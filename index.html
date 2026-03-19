@@ -19,12 +19,20 @@
     <meta name="twitter:title" content="Aurelien Boissiere - Software Engineer Portfolio" />
     <meta name="twitter:description" content="Interactive 3D portfolio. Explore projects, skills, and experience through an immersive WebGL experience." />
 
+    <link rel="preload" href="/models/garden.glb" as="fetch" crossorigin />
+    <link rel="preload" href="/models/violin.glb" as="fetch" crossorigin />
+    <link rel="preload" href="/models/bench.glb" as="fetch" crossorigin />
+
     <link rel="stylesheet" type="text/css" href="./src/reset.css" />
     <link rel="stylesheet" type="text/css" href="./src/style.css" />
   </head>
   <body>
     <script type="module" src="/src/main.ts"></script>
-    <div class="hud" role="region" aria-label="Navigation and content">
+    <div id="loading-screen">
+        <h1>L'Entrée</h1>
+        <p class="loading-text">Chargement du jardin...</p>
+    </div>
+    <div class="hud hidden" role="region" aria-label="Navigation and content">
         <h1 id="title"></h1>
         <div class="text-container">
             <div id="description-left"></div>
