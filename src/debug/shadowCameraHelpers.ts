@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-import { directionalLight } from "../lights";
+import { directionalLight } from "../scene/lights";
 
 const directionalLightShadowCameraHelper = new THREE.CameraHelper(
   directionalLight.shadow.camera

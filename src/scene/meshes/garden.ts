@@ -1,6 +1,6 @@
 import * as THREE from "three";
-import { loadPointCloud } from "../utils/pointCloud";
-import { updateLoop } from "../timer";
+import { loadPointCloud } from "./pointCloud";
+import { updateLoop } from "../../engine/timer";
 import { MathUtils } from "three/src/math/MathUtils.js";
 
 const gardenGroup = await loadPointCloud('/models/garden.glb', [0.075], [4]);

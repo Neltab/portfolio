@@ -1,6 +1,6 @@
 import { CircleGeometry, Mesh, MeshBasicMaterial, DoubleSide, DataTexture, RGBAFormat, UnsignedByteType } from "three";
-import { generateParticles } from "../utils/pointCloud";
-import { updateLoop } from "../timer";
+import { generateParticles } from "./pointCloud";
+import { updateLoop } from "../../engine/timer";
 
 const size = 1;
 const data = new Uint8Array([85, 154, 154, 128]); // RGBA for blue

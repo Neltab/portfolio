@@ -1,20 +1,20 @@
 
-import scene from "./scene";
-import camera from "./camera";
+import scene from "./scene/scene";
 import * as THREE from "three";
-import garden from "./meshes/garden";
-import violin from "./meshes/violin";
-import bench from "./meshes/bench";
-import lake from "./meshes/lake";
-import iss from "./meshes/iss";
-import { ambientLight, hemisphereLight } from "./lights";
-import timer, { tick } from "./timer";
-import { BENCH_POSITION, BENCH_ROTATION, VIOLIN_POSITION, VIOLIN_ROTATION, ISS_POSITION, ISS_ROTATION } from "./shared/positions";
-import travelling from "./shared/travelling";
+import garden from "./scene/meshes/garden";
+import violin from "./scene/meshes/violin";
+import bench from "./scene/meshes/bench";
+import lake from "./scene/meshes/lake";
+import iss from "./scene/meshes/iss";
+import { ambientLight, hemisphereLight } from "./scene/lights";
+import timer, { tick } from "./engine/timer";
+import { BENCH_POSITION, BENCH_ROTATION, VIOLIN_POSITION, VIOLIN_ROTATION, ISS_POSITION, ISS_ROTATION } from "./navigation/positions";
 import { debugCurves } from "./debug/curveDebug";
+import initHover from "./ui/hover";
+import initHud from "./ui/hud";
 
 async function main() {
-    // Meshe
+    // Meshes
     scene.add(garden);
 
     iss.position.set(ISS_POSITION.x, ISS_POSITION.y, ISS_POSITION.z);
@@ -42,57 +42,14 @@ async function main() {
     tick();
     garden.material.uniforms.loadedTime.value = timer.getElapsed();
 
+    // UI
     const hoverWhitelist = new Map<THREE.Object3D, string>([
         [violin, "Violin"],
         [iss, "Space Station"],
     ]);
 
-    const hoverLabel = document.getElementById("hover-label");
-    const raycaster = new THREE.Raycaster();
-    const mouse = new THREE.Vector2();
-    const whitelistedObjects = [...hoverWhitelist.keys()];
-
-    let currentHoveredKey: string | null = null;
-    let isShowingObjectUI = false;
-
-    function findWhitelistedMatch(hitObject: THREE.Object3D): THREE.Object3D | undefined {
-        return whitelistedObjects.find(obj => hitObject === obj || hitObject.parent === obj || obj.getObjectById(hitObject.id));
-    }
-
-    function showObjectDescription(objectKey: string) {
-        if (isShowingObjectUI && currentHoveredKey === objectKey) return;
-        isShowingObjectUI = true;
-        travelling.showObjectUI(objectKey);
-    }
-
-    function hideObjectDescription() {
-        if (!isShowingObjectUI) return;
-        isShowingObjectUI = false;
-        travelling.hideObjectUI();
-    }
-
-    window.addEventListener('mousemove', (event) => {
-        mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-        mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-        raycaster.setFromCamera(mouse, camera);
-
-        const intersects = raycaster.intersectObjects(whitelistedObjects, true);
-
-        if (intersects.length > 0) {
-            const matched = findWhitelistedMatch(intersects[0].object);
-            const objectKey = matched ? hoverWhitelist.get(matched) : undefined;
-
-            if (objectKey && hoverLabel) {
-                currentHoveredKey = objectKey;
-                showObjectDescription(objectKey);
-            }
-        } else {
-            if (hoverLabel) hoverLabel.classList.add("hidden");
-            currentHoveredKey = null;
-            hideObjectDescription();
-        }
-    });
+    initHover(hoverWhitelist);
+    initHud();
 }
 
 main();

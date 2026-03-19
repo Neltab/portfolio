@@ -1,4 +1,4 @@
-import { loadPointCloud } from "../utils/pointCloud";
+import { loadPointCloud } from "./pointCloud";
 
 const ISS_SCALE = 0.0125;
 

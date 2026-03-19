@@ -1,12 +1,10 @@
-import { PLACES, TRAVELLING } from "../shared/positions";
-import * as THREE from "three";
-import timer, { updateLoop} from "../timer";
-import camera from "../camera";
-import { CurrentUpdate } from "../helpers/updateLoop";
-import BezierCurve from "./bezierCurve";
-import { CONTROL_POINTS, CONTROL_POINTS_LOOKAT, DESTINATIONS, TRAVELLING_LOOKAT } from "../shared/positions";
-import en, { OBJECTS as EN_OBJECTS, DESTINATION_NAMES as EN_NAMES } from "../texts/en";
-import fr, { OBJECTS as FR_OBJECTS, DESTINATION_NAMES as FR_NAMES } from "../texts/fr";
+// src/ui/hud.ts
+import eventBus from "../shared/eventBus";
+import travelling from "../navigation/travelling";
+import { DESTINATIONS } from "../navigation/positions";
+import { updateLoop } from "../engine/timer";
+import en, { OBJECTS as EN_OBJECTS, DESTINATION_NAMES as EN_NAMES } from "../content/en";
+import fr, { OBJECTS as FR_OBJECTS, DESTINATION_NAMES as FR_NAMES } from "../content/fr";
 
 const SPAN_CLASSES = ["bench", "path", "museum", "lake"];
 
@@ -15,93 +13,41 @@ const texts = isEnglish ? en : fr;
 const objects = isEnglish ? EN_OBJECTS : FR_OBJECTS;
 const destinationNames = isEnglish ? EN_NAMES : FR_NAMES;
 
-type Curves = {
-    [start: number]: {
-        [end: number]: BezierCurve
-    }
-};
-
-class Travelling {
-    currentPlace: number;
-    curves: Curves;
-    lookAtCurves: Curves;
-    isTravelling: boolean;
+class Hud {
     uiTitle: HTMLElement | null;
     uiDescriptionLeft: HTMLElement | null;
     uiDescriptionRight: HTMLElement | null;
     uiNavigationMenu: HTMLElement | null;
-    savedUIState: { title: string, left: string, right: string, nav: string, hiddenElements: string[] } | null = null;
+    savedUIState: { title: string; left: string; right: string; nav: string; hiddenElements: string[] } | null = null;
 
-    constructor(currentPlace: number) {
-        this.currentPlace = currentPlace;
-        this.curves = this.convertToTravelingCurves(TRAVELLING, CONTROL_POINTS);
-        this.lookAtCurves = this.convertToTravelingCurves(TRAVELLING_LOOKAT, CONTROL_POINTS_LOOKAT);
-        this.isTravelling = false;
+    constructor() {
         this.uiTitle = document.getElementById("title");
         this.uiDescriptionLeft = document.getElementById("description-left");
         this.uiDescriptionRight = document.getElementById("description-right");
         this.uiNavigationMenu = document.getElementById("navigation-menu");
-        this.updateUI();
-    }
 
-    travelTo(place: number) {
-        if(!this.isTravelling && (!this.curves[this.currentPlace] || !this.curves[this.currentPlace][place])) return () => {};
-        const baseDuration = 5;
-        const referenceLength = 11; // Rough estimate of the average length of the curves
+        eventBus.on("travelStart", () => {
+            this.savedUIState = null;
+            this.uiTitle?.closest(".hud")?.classList.remove("object-hover");
+            this.hideUI();
+        });
 
-        const curve = this.curves[this.currentPlace][place];
-        const lookAtCurve = this.lookAtCurves[this.currentPlace][place];
-        this.isTravelling = true;
-        this.savedUIState = null;
-        this.uiTitle?.closest(".hud")?.classList.remove("object-hover");
-        this.hideUI();
-        const duration = baseDuration * Math.sqrt(curve.length / referenceLength);
-        const travelFunction = this.travelAlongCurve(curve, lookAtCurve, timer.getElapsed(), duration);
-        this.currentPlace = place;
-        return travelFunction;
-    }
-
-    travelAlongCurve = (curve: BezierCurve, lookAtCurve: BezierCurve, startTime: number, duration: number) => (elapsedTime: number, update: CurrentUpdate) => {
-        const time = elapsedTime - startTime;
-        if (time > duration) {
-            this.isTravelling = false;
-            const finalPos = curve.getPointAt(1);
-            const finalLook = lookAtCurve.getPointAt(0.99);
-            camera.position.set(finalPos.x, finalPos.y, finalPos.z);
-            camera.lookAt(finalLook);
-            this.updateUI();
+        eventBus.on("placeChanged", ({ place }) => {
+            this.updateUI(place);
             this.showUI();
-            update.remove();
-            return;
-        }
-        const t1 = Math.min(time / duration, 1);
-        const t2 = Math.min(t1 + 0.01, 1);
-        const pos = curve.getPointAt(t1);
-        const look = lookAtCurve.getPointAt(t2);
-        camera.position.set(pos.x, pos.y, pos.z);
-        camera.lookAt(look);
-    }
+        });
 
-    convertToTravelingCurves = (positions: typeof TRAVELLING, controlPoints: typeof CONTROL_POINTS) => {
-        const curves = {} as Curves;
-        for (const start in positions) {
-            curves[start] = {};
-            for (const end in positions[start]) {
-                curves[start][end] = new BezierCurve(positions[start][end], controlPoints[start][end]);
-            }
-        }
-        return curves;
-    }
+        eventBus.on("objectHovered", ({ objectKey }) => {
+            this.showObjectUI(objectKey);
+        });
 
-    getCurves() {
-        const group = new THREE.Group();
-        for (const start in this.curves) {
-            for (const end in this.curves[start]) {
-                const curve = this.curves[start][end];
-                group.add(curve.curve);
-            }
-        }
-        return group;
+        eventBus.on("objectUnhovered", () => {
+            this.hideObjectUI();
+        });
+
+        // Initial render
+        this.updateUI(travelling.currentPlace);
+        this.showUI();
     }
 
     hideUI() {
@@ -163,7 +109,7 @@ class Travelling {
 
         this.uiTitle.closest(".hud")?.classList.remove("object-hover");
         this.hideUI();
-        this.updateUI();
+        this.updateUI(travelling.currentPlace);
 
         if (!hiddenElements.includes("title")) this.uiTitle.classList.remove("hidden");
         if (!hiddenElements.includes("left") && this.uiDescriptionLeft.innerHTML) this.uiDescriptionLeft.classList.remove("hidden");
@@ -171,32 +117,32 @@ class Travelling {
         if (!hiddenElements.includes("nav")) this.uiNavigationMenu.classList.remove("hidden");
     }
 
-    bindSpanClickHandlers() {
+    bindSpanClickHandlers(currentPlace: number) {
         const containers = [this.uiDescriptionLeft, this.uiDescriptionRight];
         for (const container of containers) {
             if (!container) continue;
             for (const className of SPAN_CLASSES) {
                 const spans = container.querySelectorAll(`span.${className}`);
-                const destination = DESTINATIONS[this.currentPlace].find(d => d.icon === className);
+                const destination = DESTINATIONS[currentPlace].find(d => d.icon === className);
                 if (!destination) continue;
                 spans.forEach(span => {
                     (span as HTMLElement).style.cursor = "pointer";
-                    (span as HTMLElement).onclick = () => updateLoop.push(this.travelTo(destination.position));
+                    (span as HTMLElement).onclick = () => updateLoop.push(travelling.travelTo(destination.position));
                 });
             }
         }
     }
 
-    updateUI() {
+    updateUI(currentPlace: number) {
         if (!this.uiTitle || !this.uiDescriptionLeft || !this.uiDescriptionRight || !this.uiNavigationMenu) {
             return;
         }
-        this.uiTitle.innerHTML = texts[this.currentPlace].title;
-        this.uiDescriptionLeft.innerHTML = texts[this.currentPlace].leftDescription;
-        this.uiDescriptionRight.innerHTML = texts[this.currentPlace].rightDescription;
-        this.bindSpanClickHandlers();
+        this.uiTitle.innerHTML = texts[currentPlace].title;
+        this.uiDescriptionLeft.innerHTML = texts[currentPlace].leftDescription;
+        this.uiDescriptionRight.innerHTML = texts[currentPlace].rightDescription;
+        this.bindSpanClickHandlers(currentPlace);
         this.uiNavigationMenu.innerHTML = "";
-        for(const destination of DESTINATIONS[this.currentPlace]) {
+        for (const destination of DESTINATIONS[currentPlace]) {
             const destinationContainer = document.createElement("div");
             destinationContainer.classList.add("destination");
             const destinationIcon = document.createElement("div");
@@ -209,12 +155,12 @@ class Travelling {
             destinationText.classList.add(destination.name.toLowerCase());
             destinationText.innerHTML = destinationNames[destination.icon] || destination.name;
             destinationContainer.appendChild(destinationText);
-            destinationContainer.onclick = () => updateLoop.push(this.travelTo(destination.position));
+            destinationContainer.onclick = () => updateLoop.push(travelling.travelTo(destination.position));
             this.uiNavigationMenu?.appendChild(destinationContainer);
         }
     }
 }
 
-const travelling = new Travelling(PLACES.ENTRANCE);
-
-export default travelling;
+export default function initHud() {
+    return new Hud();
+}

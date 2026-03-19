@@ -1,4 +1,4 @@
-import { PLACES } from "../shared/positions";
+import { PLACES } from "../navigation/positions";
 
 const LAKE_TRANSLATIONS = {
     title: "The Lake",

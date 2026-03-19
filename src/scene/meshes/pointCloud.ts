@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
-import { vertexShader, fragmentShader } from "../shared/shaders";
+import { vertexShader, fragmentShader } from "../../shared/shaders";
 
 const loadPointCloud = (url: string, pointSize: number[] = [0.05], pointPerEdge: number[] = [4]) => {
     return new Promise<THREE.Group>((resolve, _reject) => {

@@ -1,10 +1,10 @@
 import { Timer } from "three/src/core/Timer.js";
-import { resizeRendererToDisplaySize } from "./utils/resize";
-import renderer from "./renderer";
-import camera from "./camera";
-import scene from "./scene";
-import stats from "./utils/stats";
-import UpdateLoop from "./helpers/updateLoop";
+import { resizeRendererToDisplaySize } from "./resize";
+import renderer from "../scene/renderer";
+import camera from "../scene/camera";
+import scene from "../scene/scene";
+import stats from "../debug/stats";
+import UpdateLoop from "./updateLoop";
 const timer = new Timer();
 
 export default timer;

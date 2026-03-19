@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { CAMERA_START_POSITION, CAMERA_START_LOOKAT } from "./shared/positions";
+import { CAMERA_START_POSITION, CAMERA_START_LOOKAT } from "../navigation/positions";
 
 const camera = new THREE.PerspectiveCamera(75, 2, 0.1, 100);
 

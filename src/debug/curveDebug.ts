@@ -1,10 +1,10 @@
 import * as THREE from "three";
-import scene from "../scene";
-import travelling from "../shared/travelling";
-import { PLACES } from "../shared/positions";
-import { bezierFolder } from "../lilgui";
-import axesHelper from "../helpers/axesHelper";
-import controls from "../controls";
+import scene from "../scene/scene";
+import travelling from "../navigation/travelling";
+import { PLACES } from "../navigation/positions";
+import { bezierFolder } from "./lilgui";
+import axesHelper from "./axesHelper";
+import controls from "./controls";
 
 
 const PLACE_NAMES: { [key: number]: string } = {

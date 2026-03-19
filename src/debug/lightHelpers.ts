@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { directionalLight, hemisphereLight } from "../lights";
+import { directionalLight, hemisphereLight } from "../scene/lights";
 
 const hemisphereLightHelper = new THREE.HemisphereLightHelper(
   hemisphereLight,
