@@ -18,12 +18,73 @@ const PLACE_NAMES: { [key: number]: string } = {
     [PLACES.LAKE.MUSEUM]: "Lake.Museum",
 };
 
+const PLACE_KEY_NAMES: { [key: number]: string } = {
+    [PLACES.ENTRANCE]: "PLACES.ENTRANCE",
+    [PLACES.BENCH]: "PLACES.BENCH",
+    [PLACES.PATH]: "PLACES.PATH",
+    [PLACES.MUSEUM]: "PLACES.MUSEUM",
+    [PLACES.LAKE.ENTRANCE]: "PLACES.LAKE.ENTRANCE",
+    [PLACES.LAKE.BENCH]: "PLACES.LAKE.BENCH",
+    [PLACES.LAKE.PATH]: "PLACES.LAKE.PATH",
+    [PLACES.LAKE.MUSEUM]: "PLACES.LAKE.MUSEUM",
+};
+
+function vec3ToStr(v: THREE.Vector3): string {
+    return `new THREE.Vector3(${v.x}, ${v.y}, ${v.z})`;
+}
+
+function exportPositions(curves: typeof travelling.curves, label: string): string {
+    const lines: string[] = [`export const ${label}: Positions = {`];
+    for (const startKey in curves) {
+        const startName = PLACE_KEY_NAMES[Number(startKey)];
+        lines.push(`    [${startName}]: {`);
+        for (const endKey in curves[Number(startKey)]) {
+            const endName = PLACE_KEY_NAMES[Number(endKey)];
+            const curve = curves[Number(startKey)][Number(endKey)];
+            const points = curve.points.map(vec3ToStr).join(", ");
+            lines.push(`        [${endName}]: [${points}],`);
+        }
+        lines.push(`    },`);
+    }
+    lines.push(`};`);
+    return lines.join("\n");
+}
+
+function exportControlPoints(curves: typeof travelling.curves, label: string): string {
+    const lines: string[] = [`export const ${label}: Positions = {`];
+    for (const startKey in curves) {
+        const startName = PLACE_KEY_NAMES[Number(startKey)];
+        lines.push(`    [${startName}]: {`);
+        for (const endKey in curves[Number(startKey)]) {
+            const endName = PLACE_KEY_NAMES[Number(endKey)];
+            const curve = curves[Number(startKey)][Number(endKey)];
+            const cps = curve.controlPoints.map(vec3ToStr).join(", ");
+            lines.push(`        [${endName}]: [${cps}],`);
+        }
+        lines.push(`    },`);
+    }
+    lines.push(`};`);
+    return lines.join("\n");
+}
+
 export function debugCurves() {
     if (!bezierFolder) return;
 
     scene.add(axesHelper);
     controls.enabled = true;
     controls.enableDamping = true;
+
+    bezierFolder.add({ export: () => {
+        const output = [
+            exportPositions(travelling.curves, "TRAVELLING"),
+            exportControlPoints(travelling.curves, "CONTROL_POINTS"),
+            exportPositions(travelling.lookAtCurves, "TRAVELLING_LOOKAT"),
+            exportControlPoints(travelling.lookAtCurves, "CONTROL_POINTS_LOOKAT"),
+        ].join("\n\n");
+        navigator.clipboard.writeText(output).then(() => {
+            console.log("Positions copied to clipboard!");
+        });
+    } }, "export").name("📋 Copy all positions");
 
     for (const startKey in travelling.curves) {
         const start = Number(startKey);
